@@ -1,26 +1,26 @@
-#' Take a screencapture (screenshot). 
+#' Take a screenshot. 
 #' 
-#' Need to install screenCapture on Win by install_screencapture().
+#' Need to install screenCapture on Win by install_screenshot().
 #' 
-#' @param file  A string for file name of screencapture.
-#' @seealso     install_screencapture()
-#' @return      A file name of screencapture. When "", screencapture will be saved in a tempral directory.
+#' @param file  A string for file name of screenshot.
+#' @seealso     install_screenshot()
+#' @return      A file name of screenshot. When "", screenshot will be saved in a tempral directory.
 #' @examples
 #' \donttest{
 #' library(imager)
-#' sc <- screencapture()
+#' sc <- screenshot()
 #' imager::load.image(sc)
 #' }
 #' 
 #' @export
-screencapture <- function(file = ""){
+screenshot <- function(file = ""){
   if(file == ""){
     file <- fs::file_temp("sc_", ext = "png")
   }
   os <- get_os()
   if(os == "win"){
-    pkg <- fs::path_package("screencapture")
-    exe <- "screencapture.exe"
+    pkg <- fs::path_package("screenshot")
+    exe <- "screenshot.exe"
     cmd <- paste0(fs::path(pkg, exe), " ", file)
   }else if(os == "mac"){
     exe <- "screencapture -o"
@@ -31,32 +31,32 @@ screencapture <- function(file = ""){
   return(file)
 }
 
-#' Install command line screencapture (screenshot) for Windows.
+#' Install command line screenshot for Windows.
 #' 
 #' Codes are from URL shown below.
 #' https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-windows#answer-1751844
 #' 
-#' @param paht A string of direcotory to be installed.
+#' @param dir A string of direcotory to be installed.
 #' @return     A string of installed dir.
 #' 
 #' @examples
 #' \donttest{
 #' library(fs)
-#' dir <- fs::path_package("screencapture")
+#' dir <- fs::path_package("screenshot")
 #' # dir <- "SET_YOUR DIRECTORY"
-#' install_screencapture(dir)
+#' install_screenshot(dir)
 #' }
 #' 
 #' @export
-install_screencapture <- function(dir){
+install_screenshot <- function(dir){
   # directory setting
   wd <- getwd()
   on.exit(setwd(wd))
   setwd(fs::path_temp())
   # download and save
-  url <- "https://raw.githubusercontent.com/matutosi/screencapture/main/tools/"
-  bat <- "screencapture.bat"
-  exe <- "screencapture.exe"
+  url <- "https://raw.githubusercontent.com/matutosi/screenshot/main/tools/"
+  bat <- "screenshot.bat"
+  exe <- "screenshot.exe"
   suppressWarnings({
     paste0(url, bat) %>%
       readLines() %>%
@@ -65,8 +65,8 @@ install_screencapture <- function(dir){
   # compile
   system(bat, intern = TRUE)
   # move
-  sc_exe <- paste0(dir, "/", exe)
-  file.rename(exe, sc_exe)
+  sc_exe <- fs::path(dir, exe)
+  fs::file_move(exe, sc_exe)
   message(exe, " is installed in ", dir)
   return(sc_exe)
 }
