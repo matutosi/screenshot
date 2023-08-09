@@ -1,0 +1,76 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# pivotea
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of screenshot is to take a screenshot easily and locate image position on a display with R.
+
+
+## Installation
+
+You can install the development version of pivotea from [GitHub](https://github.com/) with:
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+remotes::install_github("matutosi/screenshot")
+```
+
+On Win OS, need to install screenshot.exe by `install_screenshot()`.
+This exe file is compiled from codes shown below.
+
+https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-windows#answer-1751844
+
+```{r, eval = FALSE}
+dir <- fs::path_package("screenshot")
+  # if you want to install another directory
+  #   dir <- "SET_YOUR DIRECTORY"
+install_screenshot(dir)
+```
+
+<!-- 
+You can also install from CRAN:
+
+```{r, eval = FALSE}
+install.packages("screenshot")
+```
+-->
+
+## Example
+
+You can use `screenshot()` to take a screenshot easily.
+
+```{r example, eval = FALSE}
+library(screenshot)
+library(dplyr)
+library(imager)
+sc <- screenshot()
+sc_image <- imager::load.image(sc)
+plot(sc_image)
+```
+
+
+To locate image from a screenshot, use `locate_image()`.
+
+```{r example, eval = FALSE}
+
+```
+
+
+## Citation
+
+Toshikazu Matsumura (2023) Screenshot and locate image Easily. https://github.com/matutosi/screenshot/.
