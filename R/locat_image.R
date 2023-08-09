@@ -7,20 +7,19 @@
 #' @param timeout       A numeric for timeout seconds.
 #' @return  An integer vector (x-y) of image location.
 #' @examples
+#' \donttest{
 #' library(imager)
-#' \dontrun{
-#' sc <- imager::load.image(screenshot())
+#' sc_img <- imager::load.image(screenshot())
 #' w <- 100
 #' h <- 80
-#' pos_x <- 0
-#' pos_y <- imager::height(sc) - h
-#' needle <- hay2needle(sc, pos_x, pos_y, w, h)
-#' (locate_image(needle))
+#' pos_x <- 1
+#' pos_y <- imager::height(sc_img) - h 
+#' needle <- hay2needle(sc_img, pos_x, pos_y, w, h)
+#' (locate_image(needle)) # center location
 #' pos <- locate_image(needle, center = FALSE)
-#' 
-#' found <- hay2needle(sc, pos[1], pos[2], w, h)
+#' found <- hay2needle(sc_img, pos[1], pos[2], w, h)
 #' layout(c(1:3))
-#' plot(sc)
+#' plot(sc_img)
 #' plot(needle)
 #' plot(found)
 #' }
@@ -48,21 +47,23 @@ locate_image <- function(needle_image,
 }
 
 #' Comvert cimg class into grayscale x-y matrix.
-#' Helper function for locate_image()
+#' Helper function for `locate_image()`.
 #' Use grayscale to Speed up and to simplify code.
 #' 
 #' @param img   A cimg object.
 #' @return      A two (x-y) dimensional matrix.
-#' @rdname  locate_image
 #' 
 #' @export
 image2gray_matrix <- function(img){
-  img <- img %>% imager::rm.alpha() %>% imager::grayscale()
+  img <- 
+    img %>%
+    imager::rm.alpha() %>%
+    imager::grayscale()
   return(img[,,1,1])
 }
 
 #' Locate needle image  matrix position in a haystack_image matrix.
-#' Helper function for locate_image()
+#' Helper function for `locate_image()`.
 #' 
 #' @param ndl_mt,hay_mt  A matrix
 #' @param timeout        A numeric for timeout seconds.
@@ -128,7 +129,7 @@ locate_ndl_in_hay <- function(ndl_mt, hay_mt,
   return(c(0, 0))
 }
 
-#' Helper function for locate_ndl_in_hay()
+#' Helper function for `locate_ndl_in_hay()`.
 is_all_same <- function(ndl_mt, hay_mt, base_xy){
   rows <- (base_xy[[1]][1] + 1):(base_xy[[1]][1] + nrow(ndl_mt))
   cols <- (base_xy[[1]][2] + 1):(base_xy[[1]][2] + ncol(ndl_mt))
@@ -140,7 +141,7 @@ is_all_same <- function(ndl_mt, hay_mt, base_xy){
 }
 
 #' Convert array index into xy location in matrix.
-#' Helper function for locate_ndl_in_hay().
+#' Helper function for `locate_ndl_in_hay()`.
 #' 
 #' @param index,nrow  A numeric.
 #' @return A pair numeric of xy postion.
@@ -148,8 +149,6 @@ is_all_same <- function(ndl_mt, hay_mt, base_xy){
 #' nrow <- 4
 #' matrix(1:12, nrow = nrow)
 #' purrr::map(1:12, index2xy, nrow = nrow)
-#' 
-#' @export
 index2xy <- function(index, nrow){
   x <- index %% nrow
   y <- index %/% nrow
@@ -159,7 +158,7 @@ index2xy <- function(index, nrow){
 }
 
 #' Get xy position of a value in a matrix
-#' Helper function for locate_ndl_in_hay()
+#' Helper function for `locate_ndl_in_hay()`.
 #' 
 #' @param mt   A matrix
 #' @param val  A matrix
@@ -167,15 +166,13 @@ index2xy <- function(index, nrow){
 #' @examples
 #' mt <- matrix(1:12, nrow = nrow)
 #' xy_pos(mt, 5)
-#' 
-#' @export
 xy_pos <- function(mt, val){
   which(mt == val) %>%
     purrr::map(index2xy, nrow(mt))
 }
 
 #' Compare values within tow arrays or matrices.
-#' Helper function for locate_ndl_in_hay().
+#' Helper function for `locate_ndl_in_hay()`.
 #' 
 #' @param ndl_mt,hay_mt  A matrix.
 #' @return A tibble.
@@ -184,8 +181,6 @@ xy_pos <- function(mt, val){
 #' mt_1 <- matrix(sample(val,  20, replace = TRUE))
 #' mt_2 <- matrix(sample(val, 100, replace = TRUE))
 #' compare_table(mt_1, mt_2)
-#' 
-#' @export
 compare_table <- function(ndl_mt, hay_mt){
   ndl <- count_val_freq(ndl_mt, "ndl")
   hay <- count_val_freq(hay_mt, "hay")
@@ -193,16 +188,14 @@ compare_table <- function(ndl_mt, hay_mt){
     dplyr::arrange(hay, ndl)
 }
 
-#' Helper function for compare_table().
+#' Helper function for `compare_table()`.
 #' 
 #' @param mt       A numeric matrix or array.
 #' @param colname  A string of name for count.
-#' @return     A 
+#' @return         A dataframe.
 #' @examples
 #' mt <- sample(1:10, 30, replace = TRUE)
 #' count_val_freq(mt, "freq")
-#' 
-#' @export
 count_val_freq <- function(mt, colname){
   tibble::tibble("val" := as.numeric(mt)) %>%
     dplyr::group_by(val) %>%
@@ -215,8 +208,7 @@ count_val_freq <- function(mt, colname){
 #' @param pos_x,pos_y    A numeric to indicate the top left corner of cuting image.
 #'                       When NULL, position will be randomly sampled.
 #' @param w,h            A numeric for width or height of the cutting image.
-#' @return An image of cimg.
-#' @rdname 
+#' @return               An image of cimg object.
 #' @examples
 #' library(imager)
 #' haystack_image <- imager::load.example("parrots")
@@ -227,7 +219,10 @@ count_val_freq <- function(mt, colname){
 #' 
 #' @export
 hay2needle <- function(haystack_image, pos_x, pos_y, w = 50, h = 20){
-  haystack_image %>%
-    imager::imsub(pos_x <= x & x <= pos_x + w - 1) %>%
-    imager::imsub(pos_y <= y & y <= pos_y + h - 1)
+  dims <- dim(haystack_image)
+  img <- haystack_image[
+           pos_x:(pos_x + w - 1), 
+           pos_y:(pos_y + h - 1),,]
+  dim(img) <- c(w,h,dims[3],dims[4])
+  return(cimg(img))
 }
