@@ -30,6 +30,8 @@ screenshot <- function(bin_dir = "", file = ""){
     exe <- "screencapture -o"
     cmd <- paste0(fs::path(exe), " ", file)
   }else{
+    exe <- "gnome-screenshot -f"
+    cmd <- paste0(exe, " ", file)
   }
   system(cmd, intern = TRUE)
   return(file)

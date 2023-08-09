@@ -19,11 +19,14 @@ https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-wi
 }
 \examples{
 \donttest{
-library(fs)
-dir <- fs::path_package("screenshot")
-# if you want to install another directory
-#   dir <- "SET_YOUR DIRECTORY"
-install_screenshot(dir)
+# need only on Win
+if(get_os() == "win"){
+  library(fs)
+  dir <- fs::path_package("screenshot")
+  # if you want to install another directory
+  #   dir <- "SET_YOUR DIRECTORY"
+  install_screenshot(dir)
+}
 }
 
 }
