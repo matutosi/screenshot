@@ -1,11 +1,11 @@
-#' Locate needle image position.
+#' Locate needle image position on a screenshot image.
 #' 
 #' @param needle_image  A string of image file path or 
-#'                      a "cimg" class object of imager library.
+#'                      a cimg class object of imager library.
 #' @param center        A logical. TRUE returns center position of needle_image.
 #' @param exact         A logical. Check matching exactly or not.
 #' @param timeout       A numeric for timeout seconds.
-#' @return  An integer vector (x-y) of image location.
+#' @return        A numeric pair of xy location.
 #' @examples
 #' \donttest{
 #' library(imager)
@@ -46,12 +46,12 @@ locate_image <- function(needle_image,
   return(pos)
 }
 
-#' Comvert cimg class into grayscale x-y matrix.
+#' Convert cimg class into grayscale xy matrix.
 #' Helper function for `locate_image()`.
 #' Use grayscale to Speed up and to simplify code.
 #' 
 #' @param img   A cimg object.
-#' @return      A two (x-y) dimensional matrix.
+#' @return      An xy dimensional matrix.
 #' 
 #' @export
 image2gray_matrix <- function(img){
@@ -68,7 +68,7 @@ image2gray_matrix <- function(img){
 #' @param ndl_mt,hay_mt  A matrix
 #' @param timeout        A numeric for timeout seconds.
 #' @param exact          A logical. Check matching exactly or not.
-#' @return A numeric pair of xy position of needle image.
+#' @return         A numeric pair of xy location for needle image.
 #' @examples
 #' library(imager)
 #' haystack_image <- imager::load.example("parrots")
@@ -130,6 +130,9 @@ locate_ndl_in_hay <- function(ndl_mt, hay_mt,
 }
 
 #' Helper function for `locate_ndl_in_hay()`.
+#' @param ndl_mt,hay_mt  A matrix
+#' @param base_xy        A numeric pair of xy location.
+#' @return         A logical.
 is_all_same <- function(ndl_mt, hay_mt, base_xy){
   rows <- (base_xy[[1]][1] + 1):(base_xy[[1]][1] + nrow(ndl_mt))
   cols <- (base_xy[[1]][2] + 1):(base_xy[[1]][2] + ncol(ndl_mt))
@@ -144,11 +147,13 @@ is_all_same <- function(ndl_mt, hay_mt, base_xy){
 #' Helper function for `locate_ndl_in_hay()`.
 #' 
 #' @param index,nrow  A numeric.
-#' @return A pair numeric of xy postion.
+#' @return            A numeric pair of xy location.
 #' @examples
 #' nrow <- 4
 #' matrix(1:12, nrow = nrow)
 #' purrr::map(1:12, index2xy, nrow = nrow)
+#' 
+#' @export
 index2xy <- function(index, nrow){
   x <- index %% nrow
   y <- index %/% nrow
@@ -162,10 +167,13 @@ index2xy <- function(index, nrow){
 #' 
 #' @param mt   A matrix
 #' @param val  A matrix
-#' @return     A list of xy pairs.
+#' @return     A numeric pairs of xy location.
 #' @examples
+#' nrow <- 4
 #' mt <- matrix(1:12, nrow = nrow)
 #' xy_pos(mt, 5)
+#' 
+#' @export
 xy_pos <- function(mt, val){
   which(mt == val) %>%
     purrr::map(index2xy, nrow(mt))
@@ -181,6 +189,8 @@ xy_pos <- function(mt, val){
 #' mt_1 <- matrix(sample(val,  20, replace = TRUE))
 #' mt_2 <- matrix(sample(val, 100, replace = TRUE))
 #' compare_table(mt_1, mt_2)
+#' 
+#' @export
 compare_table <- function(ndl_mt, hay_mt){
   ndl <- count_val_freq(ndl_mt, "ndl")
   hay <- count_val_freq(hay_mt, "hay")
@@ -196,16 +206,19 @@ compare_table <- function(ndl_mt, hay_mt){
 #' @examples
 #' mt <- sample(1:10, 30, replace = TRUE)
 #' count_val_freq(mt, "freq")
+#' 
+#' @export
 count_val_freq <- function(mt, colname){
-  tibble::tibble("val" := as.numeric(mt)) %>%
-    dplyr::group_by(val) %>%
+  val <- "val"
+  tibble::tibble({{val}} := as.numeric(mt)) %>%
+    dplyr::group_by(.data[[val]]) %>%
     dplyr::summarise({{colname}} := dplyr::n())
 }
 
 #' Cut off a part of image from a whole image. 
 #' 
 #' @param haystack_image An image of cimg.
-#' @param pos_x,pos_y    A numeric to indicate the top left corner of cuting image.
+#' @param pos_x,pos_y    A numeric to indicate the top left corner of cutting image.
 #'                       When NULL, position will be randomly sampled.
 #' @param w,h            A numeric for width or height of the cutting image.
 #' @return               An image of cimg object.
@@ -224,5 +237,5 @@ hay2needle <- function(haystack_image, pos_x, pos_y, w = 50, h = 20){
            pos_x:(pos_x + w - 1), 
            pos_y:(pos_y + h - 1),,]
   dim(img) <- c(w,h,dims[3],dims[4])
-  return(cimg(img))
+  return(imager::cimg(img))
 }

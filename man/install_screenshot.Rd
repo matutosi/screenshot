@@ -7,7 +7,7 @@
 install_screenshot(dir)
 }
 \arguments{
-\item{dir}{A string of direcotory to be installed.}
+\item{dir}{A string of directory to be installed.}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{A string of installed dir.
@@ -21,7 +21,8 @@ https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-wi
 \donttest{
 library(fs)
 dir <- fs::path_package("screenshot")
-# dir <- "SET_YOUR DIRECTORY"
+# if you want to install another directory
+#   dir <- "SET_YOUR DIRECTORY"
 install_screenshot(dir)
 }
 

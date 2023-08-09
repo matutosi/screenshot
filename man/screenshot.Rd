@@ -4,27 +4,30 @@
 \alias{screenshot}
 \title{Take a screenshot.}
 \usage{
-screenshot(file = "")
+screenshot(bin_dir = "", file = "")
 }
 \arguments{
+\item{bin_dir}{A string for directory name of screenshot.exe on Win.}
+
 \item{file}{A string for file name of screenshot.}
 }
 \value{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{ A file name of screenshot. When "", screenshot will be saved in a tempral directory.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    A file name of screenshot. When "", screenshot will be saved in a tempral directory.
 }\if{html}{\out{</div>}}
 }
 \description{
-Need to install screenCapture on Win by install_screenshot().
+Need to install screenshot.exe on Win by install_screenshot().
 }
 \examples{
 \donttest{
 library(imager)
 sc <- screenshot()
-imager::load.image(sc)
+sc_image <- imager::load.image(sc)
+plot(sc_image)
 }
 
 }
 \seealso{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{install_screenshot()
+\if{html}{\out{<div class="sourceCode">}}\preformatted{   install_screenshot()
 }\if{html}{\out{</div>}}
 }

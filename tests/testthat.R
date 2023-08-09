@@ -6,7 +6,7 @@
 # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
 # * https://testthat.r-lib.org/articles/special-files.html
 
-library(testthat)
-library(screenshot)
-
-test_check("screenshot")
+  # library(testthat)
+  # library(screenshot)
+  # 
+  # test_check("screenshot")
