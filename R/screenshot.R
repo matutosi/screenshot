@@ -45,11 +45,14 @@ screenshot <- function(bin_dir = "", file = ""){
 #' 
 #' @examples
 #' \donttest{
-#' library(fs)
-#' dir <- fs::path_package("screenshot")
-#' # if you want to install another directory
-#' #   dir <- "SET_YOUR DIRECTORY"
-#' install_screenshot(dir)
+#' # need only on Win
+#' if(get_os() == "win"){
+#'   library(fs)
+#'   dir <- fs::path_package("screenshot")
+#'   # if you want to install another directory
+#'   #   dir <- "SET_YOUR DIRECTORY"
+#'   install_screenshot(dir)
+#' }
 #' }
 #' 
 #' @export
