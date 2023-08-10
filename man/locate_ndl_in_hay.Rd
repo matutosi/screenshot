@@ -23,7 +23,6 @@ Locate needle image  matrix position in a haystack_image matrix.
 Helper function for \code{locate_image()}.
 }
 \examples{
-library(imager)
 haystack_image <- imager::load.example("parrots")
 w <- 100
 h <- 50

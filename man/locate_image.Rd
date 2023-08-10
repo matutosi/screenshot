@@ -25,20 +25,22 @@ Locate needle image position on a screenshot image.
 }
 \examples{
 \donttest{
-library(imager)
-sc_img <- imager::load.image(screenshot())
-w <- 100
-h <- 80
-pos_x <- 1
-pos_y <- imager::height(sc_img) - h 
-needle <- hay2needle(sc_img, pos_x, pos_y, w, h)
-(locate_image(needle)) # center location
-pos <- locate_image(needle, center = FALSE)
-found <- hay2needle(sc_img, pos[1], pos[2], w, h)
-layout(c(1:3))
-plot(sc_img)
-plot(needle)
-plot(found)
+sc <- screenshot()
+if(sc != ""){
+  sc_image <- imager::load.image(sc)
+  w <- 100
+  h <- 80
+  pos_x <- 1
+  pos_y <- imager::height(sc_img) - h 
+  needle <- hay2needle(sc_img, pos_x, pos_y, w, h)
+  (locate_image(needle)) # center location
+  pos <- locate_image(needle, center = FALSE)
+  found <- hay2needle(sc_img, pos[1], pos[2], w, h)
+  layout(c(1:3))
+  plot(sc_img)
+  plot(needle)
+  plot(found)
+}
 }
 
 }

@@ -22,7 +22,6 @@ When NULL, position will be randomly sampled.}
 Cut off a part of image from a whole image.
 }
 \examples{
-library(imager)
 haystack_image <- imager::load.example("parrots")
 needle_image <- hay2needle(haystack_image, 200, 250, 100, 50)
 layout(c(1:2))

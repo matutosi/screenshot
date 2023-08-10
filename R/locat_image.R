@@ -8,20 +8,22 @@
 #' @return        A numeric pair of xy location.
 #' @examples
 #' \donttest{
-#' library(imager)
-#' sc_img <- imager::load.image(screenshot())
-#' w <- 100
-#' h <- 80
-#' pos_x <- 1
-#' pos_y <- imager::height(sc_img) - h 
-#' needle <- hay2needle(sc_img, pos_x, pos_y, w, h)
-#' (locate_image(needle)) # center location
-#' pos <- locate_image(needle, center = FALSE)
-#' found <- hay2needle(sc_img, pos[1], pos[2], w, h)
-#' layout(c(1:3))
-#' plot(sc_img)
-#' plot(needle)
-#' plot(found)
+#' sc <- screenshot()
+#' if(sc != ""){
+#'   sc_image <- imager::load.image(sc)
+#'   w <- 100
+#'   h <- 80
+#'   pos_x <- 1
+#'   pos_y <- imager::height(sc_img) - h 
+#'   needle <- hay2needle(sc_img, pos_x, pos_y, w, h)
+#'   (locate_image(needle)) # center location
+#'   pos <- locate_image(needle, center = FALSE)
+#'   found <- hay2needle(sc_img, pos[1], pos[2], w, h)
+#'   layout(c(1:3))
+#'   plot(sc_img)
+#'   plot(needle)
+#'   plot(found)
+#' }
 #' }
 #' 
 #' @export
@@ -33,9 +35,12 @@ locate_image <- function(needle_image,
   if(! "cimg" %in% class(needle_image)){
     stop("needle_image should be cimg class object or image file path")
   }
-  haystack_image <- 
-    screenshot() %>%
-    imager::load.image()
+  sc <- screenshot()
+  if(sc != ""){
+    message("Could NOT take a screenshot")
+    return(c(0,0))
+  }
+  haystack_image <- imager::load.image(sc)
   ndl_mt <- image2gray_matrix(needle_image)
   hay_mt <- image2gray_matrix(haystack_image)
   pos <- locate_ndl_in_hay(ndl_mt, hay_mt, exact, timeout)
@@ -70,7 +75,6 @@ image2gray_matrix <- function(img){
 #' @param exact          A logical. Check matching exactly or not.
 #' @return         A numeric pair of xy location for needle image.
 #' @examples
-#' library(imager)
 #' haystack_image <- imager::load.example("parrots")
 #' w <- 100
 #' h <- 50
@@ -223,7 +227,6 @@ count_val_freq <- function(mt, colname){
 #' @param w,h            A numeric for width or height of the cutting image.
 #' @return               An image of cimg object.
 #' @examples
-#' library(imager)
 #' haystack_image <- imager::load.example("parrots")
 #' needle_image <- hay2needle(haystack_image, 200, 250, 100, 50)
 #' layout(c(1:2))

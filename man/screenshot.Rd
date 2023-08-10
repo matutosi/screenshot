@@ -20,10 +20,11 @@ Need to install screenshot.exe on Win by install_screenshot().
 }
 \examples{
 \donttest{
-library(imager)
 sc <- screenshot()
-sc_image <- imager::load.image(sc)
-plot(sc_image)
+if(sc != ""){
+  sc_image <- imager::load.image(sc)
+  plot(sc_image)
+}
 }
 
 }

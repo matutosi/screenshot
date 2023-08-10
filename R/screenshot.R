@@ -8,14 +8,19 @@
 #' @return         A file name of screenshot. When "", screenshot will be saved in a tempral directory.
 #' @examples
 #' \donttest{
-#' library(imager)
 #' sc <- screenshot()
-#' sc_image <- imager::load.image(sc)
-#' plot(sc_image)
+#' if(sc != ""){
+#'   sc_image <- imager::load.image(sc)
+#'   plot(sc_image)
+#' }
 #' }
 #' 
 #' @export
 screenshot <- function(bin_dir = "", file = ""){
+  if(!screenshot_exists()){
+    message("screenshot exec file NOT found")
+    return("")
+  }
   if(file == ""){
     file <- fs::file_temp("sc_", ext = "png")
   }
@@ -29,7 +34,8 @@ screenshot <- function(bin_dir = "", file = ""){
   }else if(os == "mac"){
     exe <- "screencapture -o"
     cmd <- paste0(fs::path(exe), " ", file)
-  }else{
+  }else{ 
+  # maybe Linux (almost GNOME?)
     exe <- "gnome-screenshot -f"
     cmd <- paste0(exe, " ", file)
   }
@@ -40,25 +46,35 @@ screenshot <- function(bin_dir = "", file = ""){
 #' Install command line screenshot for Windows.
 #' 
 #' Codes are from URL shown below.
-#' https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-windows#answer-1751844
+#'   https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-windows#answer-1751844
+#' On Mac `screencapture` is usually available. 
+#' On Linux GNOME desktop use `gnome-screenshot`. 
+#' If not installed, run `sudo apt install gnome-screenshot`.
 #' 
-#' @param dir A string of directory to be installed.
-#' @return     A string of installed dir.
+#' @param bin_dir A string of directory to be installed.
+#' @return        A string of installed dir.
 #' 
 #' @examples
 #' \donttest{
 #' # need only on Win
 #' if(get_os() == "win"){
 #'   library(fs)
-#'   dir <- fs::path_package("screenshot")
+#'   bin_dir <- fs::path_package("screenshot")
 #'   # if you want to install another directory
-#'   #   dir <- "SET_YOUR DIRECTORY"
+#'   #   bin_dir <- "SET_YOUR DIRECTORY"
 #'   install_screenshot(dir)
 #' }
 #' }
 #' 
 #' @export
-install_screenshot <- function(dir){
+install_screenshot <- function(bin_dir){
+  os <- get_os()
+  if(os != "win"){
+    message("On Mac `screencapture` is usually available.")
+    message("On Linux GNOME desktop use `gnome-screenshot`.")
+    message("If not installed, run `sudo apt install gnome-screenshot`.")
+    return("")
+  }
   # directory setting
   wd <- getwd()
   on.exit(setwd(wd))
@@ -75,8 +91,38 @@ install_screenshot <- function(dir){
   # compile
   system(bat, intern = TRUE)
   # move
-  sc_exe <- fs::path(dir, exe)
+  sc_exe <- fs::path(bin_dir, exe)
   fs::file_move(exe, sc_exe)
-  message(exe, " is installed in ", dir)
+  message(exe, " is installed in ", bin_dir)
   return(sc_exe)
+}
+
+#' Find screenshot exec file.
+#' 
+#' @param bin_dir  A string for directory name screenshot.exe exec file. 
+#'                 No need on Mac and Linux.
+#' @return     A logical.
+#' 
+#' @examples
+#' screenshot_exists()
+#' 
+#' @export
+screenshot_exists <- function(bin_dir = ""){
+  os <- get_os()
+  if(os == "win"){
+    wd <- getwd()
+    on.exit(setwd(wd))
+    if(bin_dir == ""){
+      bin_dir <- fs::path_package("screenshot")
+    }
+    setwd(bin_dir)
+    exists <- fs::file_exists("screenshot.exe")
+  }else if(os == "mac"){
+    exe <- "screencapture"
+    exists <- Sys.which(exe) != ""
+  }else{
+    exe <- "gnome-screenshot"
+    exists <- Sys.which(exe) != ""
+  }
+  return(exists)
 }
