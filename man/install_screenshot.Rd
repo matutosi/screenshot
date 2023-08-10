@@ -21,7 +21,8 @@ On Linux GNOME desktop use \code{gnome-screenshot}.
 If not installed, run \verb{sudo apt install gnome-screenshot}.
 }
 \examples{
-\donttest{
+if(interactive()){
+
 # need only on Win
 if(get_os() == "win"){
   bin_dir <- fs::path_package("screenshot")
@@ -29,6 +30,7 @@ if(get_os() == "win"){
   #   bin_dir <- "SET_YOUR DIRECTORY"
   install_screenshot(bin_dir)
 }
+
 }
 
 }

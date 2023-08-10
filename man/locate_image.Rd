@@ -32,7 +32,8 @@ a cimg class object of imager library.}
 Locate needle image position on a screenshot image.
 }
 \examples{
-\donttest{
+if(interactive()){
+
 sc <- screenshot()
 if(sc != ""){
   sc_image <- imager::load.image(sc)
@@ -49,6 +50,7 @@ if(sc != ""){
   plot(needle)
   plot(found)
 }
+
 }
 
 }

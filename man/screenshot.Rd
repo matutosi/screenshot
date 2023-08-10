@@ -19,12 +19,14 @@ screenshot(bin_dir = "", file = "")
 Need to install screenshot.exe on Win by install_screenshot().
 }
 \examples{
-\donttest{
+if(interactive()){
+
 sc <- screenshot()
 if(sc != ""){
   sc_image <- imager::load.image(sc)
   plot(sc_image)
 }
+
 }
 
 }

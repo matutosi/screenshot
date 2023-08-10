@@ -7,12 +7,14 @@
 #' @seealso        install_screenshot()
 #' @return         A file name of screenshot. When "", screenshot will be saved in a tempral directory.
 #' @examples
-#' \donttest{
+#' if(interactive()){
+#' 
 #' sc <- screenshot()
 #' if(sc != ""){
 #'   sc_image <- imager::load.image(sc)
 #'   plot(sc_image)
 #' }
+#' 
 #' }
 #' 
 #' @export
@@ -55,7 +57,8 @@ screenshot <- function(bin_dir = "", file = ""){
 #' @return        A string of installed directory.
 #' 
 #' @examples
-#' \donttest{
+#' if(interactive()){
+#' 
 #' # need only on Win
 #' if(get_os() == "win"){
 #'   bin_dir <- fs::path_package("screenshot")
@@ -63,6 +66,7 @@ screenshot <- function(bin_dir = "", file = ""){
 #'   #   bin_dir <- "SET_YOUR DIRECTORY"
 #'   install_screenshot(bin_dir)
 #' }
+#' 
 #' }
 #' 
 #' @export

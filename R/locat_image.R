@@ -8,7 +8,8 @@
 #' @param bin_dir       A string for directory name of screenshot.exe on Win.
 #' @return        A numeric pair of xy location.
 #' @examples
-#' \donttest{
+#' if(interactive()){
+#' 
 #' sc <- screenshot()
 #' if(sc != ""){
 #'   sc_image <- imager::load.image(sc)
@@ -25,6 +26,7 @@
 #'   plot(needle)
 #'   plot(found)
 #' }
+#' 
 #' }
 #' 
 #' @export
