@@ -4,13 +4,13 @@
 \alias{install_screenshot}
 \title{Install command line screenshot for Windows.}
 \usage{
-install_screenshot(bin_dir)
+install_screenshot(bin_dir = "")
 }
 \arguments{
 \item{bin_dir}{A string of directory to be installed.}
 }
 \value{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{   A string of installed dir.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{   A string of installed directory.
 }\if{html}{\out{</div>}}
 }
 \description{
@@ -24,11 +24,10 @@ If not installed, run \verb{sudo apt install gnome-screenshot}.
 \donttest{
 # need only on Win
 if(get_os() == "win"){
-  library(fs)
   bin_dir <- fs::path_package("screenshot")
   # if you want to install another directory
   #   bin_dir <- "SET_YOUR DIRECTORY"
-  install_screenshot(dir)
+  install_screenshot(bin_dir)
 }
 }
 

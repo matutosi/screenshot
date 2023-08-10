@@ -4,7 +4,13 @@
 \alias{locate_image}
 \title{Locate needle image position on a screenshot image.}
 \usage{
-locate_image(needle_image, center = TRUE, exact = TRUE, timeout = 5)
+locate_image(
+  needle_image,
+  center = TRUE,
+  exact = TRUE,
+  timeout = 5,
+  bin_dir = ""
+)
 }
 \arguments{
 \item{needle_image}{A string of image file path or
@@ -15,6 +21,8 @@ a cimg class object of imager library.}
 \item{exact}{A logical. Check matching exactly or not.}
 
 \item{timeout}{A numeric for timeout seconds.}
+
+\item{bin_dir}{A string for directory name of screenshot.exe on Win.}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{   A numeric pair of xy location.
@@ -31,13 +39,13 @@ if(sc != ""){
   w <- 100
   h <- 80
   pos_x <- 1
-  pos_y <- imager::height(sc_img) - h 
-  needle <- hay2needle(sc_img, pos_x, pos_y, w, h)
+  pos_y <- imager::height(sc_image) - h
+  needle <- hay2needle(sc_image, pos_x, pos_y, w, h)
   (locate_image(needle)) # center location
   pos <- locate_image(needle, center = FALSE)
-  found <- hay2needle(sc_img, pos[1], pos[2], w, h)
+  found <- hay2needle(sc_image, pos[1], pos[2], w, h)
   layout(c(1:3))
-  plot(sc_img)
+  plot(sc_image)
   plot(needle)
   plot(found)
 }

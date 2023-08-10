@@ -17,7 +17,7 @@
 #' 
 #' @export
 screenshot <- function(bin_dir = "", file = ""){
-  if(!screenshot_exists()){
+  if(!screenshot_exists(bin_dir)){
     message("screenshot exec file NOT found")
     return("")
   }
@@ -52,22 +52,21 @@ screenshot <- function(bin_dir = "", file = ""){
 #' If not installed, run `sudo apt install gnome-screenshot`.
 #' 
 #' @param bin_dir A string of directory to be installed.
-#' @return        A string of installed dir.
+#' @return        A string of installed directory.
 #' 
 #' @examples
 #' \donttest{
 #' # need only on Win
 #' if(get_os() == "win"){
-#'   library(fs)
 #'   bin_dir <- fs::path_package("screenshot")
 #'   # if you want to install another directory
 #'   #   bin_dir <- "SET_YOUR DIRECTORY"
-#'   install_screenshot(dir)
+#'   install_screenshot(bin_dir)
 #' }
 #' }
 #' 
 #' @export
-install_screenshot <- function(bin_dir){
+install_screenshot <- function(bin_dir = ""){
   os <- get_os()
   if(os != "win"){
     message("On Mac `screencapture` is usually available.")
@@ -91,6 +90,9 @@ install_screenshot <- function(bin_dir){
   # compile
   system(bat, intern = TRUE)
   # move
+  if(bin_dir == ""){
+    bin_dir <- fs::path_package("screenshot")
+  }
   sc_exe <- fs::path(bin_dir, exe)
   fs::file_move(exe, sc_exe)
   message(exe, " is installed in ", bin_dir)

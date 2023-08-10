@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.tools\$
+^\.inst\$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$

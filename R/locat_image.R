@@ -5,6 +5,7 @@
 #' @param center        A logical. TRUE returns center position of needle_image.
 #' @param exact         A logical. Check matching exactly or not.
 #' @param timeout       A numeric for timeout seconds.
+#' @param bin_dir       A string for directory name of screenshot.exe on Win.
 #' @return        A numeric pair of xy location.
 #' @examples
 #' \donttest{
@@ -14,13 +15,13 @@
 #'   w <- 100
 #'   h <- 80
 #'   pos_x <- 1
-#'   pos_y <- imager::height(sc_img) - h 
-#'   needle <- hay2needle(sc_img, pos_x, pos_y, w, h)
+#'   pos_y <- imager::height(sc_image) - h
+#'   needle <- hay2needle(sc_image, pos_x, pos_y, w, h)
 #'   (locate_image(needle)) # center location
 #'   pos <- locate_image(needle, center = FALSE)
-#'   found <- hay2needle(sc_img, pos[1], pos[2], w, h)
+#'   found <- hay2needle(sc_image, pos[1], pos[2], w, h)
 #'   layout(c(1:3))
-#'   plot(sc_img)
+#'   plot(sc_image)
 #'   plot(needle)
 #'   plot(found)
 #' }
@@ -28,15 +29,16 @@
 #' 
 #' @export
 locate_image <- function(needle_image, 
-                         center = TRUE, exact = TRUE, timeout = 5){
+                         center = TRUE, exact = TRUE, timeout = 5,
+                         bin_dir = ""){
   if(is.character(needle_image)){
     needle_image <- imager::load.image(needle_image)
   }
   if(! "cimg" %in% class(needle_image)){
     stop("needle_image should be cimg class object or image file path")
   }
-  sc <- screenshot()
-  if(sc != ""){
+  sc <- screenshot(bin_dir = bin_dir)
+  if(sc == ""){
     message("Could NOT take a screenshot")
     return(c(0,0))
   }
@@ -125,7 +127,7 @@ locate_ndl_in_hay <- function(ndl_mt, hay_mt,
         return(base_xy[[1]] + 1) # return as a reference
       }
       if(as.numeric(Sys.time() - st) > timeout){
-        stop("could not found needle_image in ", timeout, " seconds")
+        stop("Could not found needle_image in ", timeout, " seconds")
       }
     }
   }
