@@ -1,31 +1,20 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # screenshot
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of screenshot is to take a screenshot easily and locate image position on a display with R.
-
+The goal of screenshot is to take a screenshot easily and locate image
+position on a display with R.
 
 ## Installation
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the development version from
+[GitHub](https://github.com/) with:
 
-```{r, eval = FALSE}
+``` r
 # install.packages("devtools")
 remotes::install_github("matutosi/screenshot")
 ```
@@ -33,9 +22,9 @@ remotes::install_github("matutosi/screenshot")
 On Win OS, need to install screenshot.exe by `install_screenshot()`.
 This exe file is compiled from codes shown below.
 
-https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-windows#answer-1751844
+<https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-windows#answer-1751844>
 
-```{r, eval = FALSE}
+``` r
 library(screenshot)
 install_screenshot()
   # if you want to install another directory
@@ -43,15 +32,15 @@ install_screenshot()
   # install_screenshot(bin_dir)
 ```
 
-On Mac `screencapture` is usually available. 
+On Mac `screencapture` is usually available.
 
-On Linux GNOME desktop use `gnome-screenshot`. 
-If not installed, run `sudo apt install gnome-screenshot`.
-
+On Linux GNOME desktop use `gnome-screenshot`. If not installed, run
+`sudo apt install gnome-screenshot`.
 
 <!-- 
 You can also install from CRAN:
-```{r, eval = FALSE}
+
+```r
 install.packages("screenshot")
 ```
 -->
@@ -60,17 +49,17 @@ install.packages("screenshot")
 
 You can use `screenshot()` to take a screenshot easily.
 
-```{r eval = FALSE}
+``` r
 library(screenshot)
 sc <- screenshot()
 sc_image <- imager::load.image(sc)
 plot(sc_image)
 ```
 
-To locate image from a screenshot, use `locate_image()`. 
-In this case, bottom left corner of screenshot image was cut off as needle image. 
+To locate image from a screenshot, use `locate_image()`. In this case,
+bottom left corner of screenshot image was cut off as needle image.
 
-```{r eval = FALSE}
+``` r
 sc <- screenshot()
 sc_image <- imager::load.image(sc)
 w <- 100
@@ -89,4 +78,5 @@ plot(found)
 
 ## Citation
 
-Toshikazu Matsumura (2023) screenshot. Screenshot and locate image Easily. https://github.com/matutosi/screenshot/.
+Toshikazu Matsumura (2023) screenshot. Screenshot and locate image
+Easily. <https://github.com/matutosi/screenshot/>.
