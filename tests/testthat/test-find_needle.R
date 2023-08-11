@@ -1,4 +1,3 @@
-devtools::load_all("D:/matu/work/ToDo/screenshot/.")
 library(magrittr)
 
 testthat::test_that("locate_position() can find needle image", {
