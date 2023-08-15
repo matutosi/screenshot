@@ -76,6 +76,21 @@ plot(needle)
 plot(found)
 ```
 
+## Caution
+
+When changing display DPI scaling, need to adjust position.
+
+``` r
+  # when using 125%
+pos <- locate_image(IMAGE_TO_CLICK) / 1.25
+KeyboardSimulater::mouse.move(pos[1], pos[2])
+KeyboardSimulater::mouse.click()
+```
+
+You can see display scale in setting app as shown below.
+
+<img width="50%" src="./img/displaysettings.png">
+
 ## Citation
 
 Toshikazu Matsumura (2023) screenshot. Screenshot and locate image
