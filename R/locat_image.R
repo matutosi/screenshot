@@ -5,6 +5,9 @@
 #' @param center        A logical. TRUE returns center position of needle_image.
 #' @param exact         A logical. Check matching exactly or not.
 #' @param timeout       A numeric for timeout seconds.
+#' @param corner        A string to specify a corner of the display. 
+#'                      "top_left", "top_right", "bottom_left", or "bottom_right".
+#' @param width,height  A integer to specify width or height of the corner.
 #' @param bin_dir       A string for directory name of screenshot.exe on Win.
 #' @return        A numeric pair of xy location.
 #' @examples
@@ -25,14 +28,17 @@
 #'   plot(sc_image)
 #'   plot(needle)
 #'   plot(found)
+#'   # usse `coner` argument to limit searching field
+#'   pos <- locate_image(needle, corner = "bottom_left", center = FALSE)
 #' }
 #' 
 #' }
 #' 
 #' @export
 locate_image <- function(needle_image, 
-                         center = TRUE, exact = TRUE, timeout = 5,
-                         bin_dir = ""){
+                          center = TRUE, exact = TRUE, timeout = 5,
+                          corner = NULL, width = 600, height = 300,
+                          bin_dir = ""){
   if(is.character(needle_image)){
     needle_image <- imager::load.image(needle_image)
   }
@@ -45,9 +51,19 @@ locate_image <- function(needle_image,
     return(c(0,0))
   }
   haystack_image <- imager::load.image(sc)
+  scale <- 
+    dim(haystack_image)[1] / display_size()$width %>%
+  round(2)
+  if(!is.null(corner)){
+    corner <- display_corner(corner, width, height) * scale
+      haystack_image <- hay2needle(haystack_image, 
+                                 corner[1], corner[2], corner[3], corner[4])
+  }else{
+    corner <- c(0,0,0,0)
+  }
   ndl_mt <- image2gray_matrix(needle_image)
   hay_mt <- image2gray_matrix(haystack_image)
-  pos <- locate_ndl_in_hay(ndl_mt, hay_mt, exact, timeout)
+  pos <- (locate_ndl_in_hay(ndl_mt, hay_mt, exact, timeout) + corner[1:2]) / scale
   if(center){
     return(c(pos[1] + imager::width(needle_image)/2  %>% floor(),
              pos[2] + imager::height(needle_image)/2 %>% floor() ))

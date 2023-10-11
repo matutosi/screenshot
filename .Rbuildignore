@@ -2,8 +2,8 @@
 ^\.Rproj\.user$
 ^\.tools\$
 ^\.inst\$
+^\.img\$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
-^\.img\$
