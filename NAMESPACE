@@ -3,6 +3,8 @@
 export("%>%")
 export(compare_table)
 export(count_val_freq)
+export(display_corner)
+export(display_size)
 export(get_os)
 export(hay2needle)
 export(image2gray_matrix)

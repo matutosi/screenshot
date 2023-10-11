@@ -17,6 +17,7 @@ Imports:
     dplyr,
     fs,
     imager,
+    KeyboardSimulator,
     magrittr,
     purrr,
     rlang,

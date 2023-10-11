@@ -20,7 +20,7 @@
 #' @export
 screenshot <- function(bin_dir = "", file = ""){
   if(!screenshot_exists(bin_dir)){
-    message("screenshot exec file NOT found")
+    message("NOT found screenshot exec file")
     return("")
   }
   if(file == ""){

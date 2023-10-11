@@ -76,7 +76,9 @@ plot(needle)
 plot(found)
 ```
 
-## Caution
+## Caution (=0.9.0)
+
+- Automatically adjusted in 0.9.1 and latter.
 
 When changing display DPI scaling, need to adjust position.
 

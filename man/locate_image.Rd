@@ -9,6 +9,9 @@ locate_image(
   center = TRUE,
   exact = TRUE,
   timeout = 5,
+  corner = NULL,
+  width = 600,
+  height = 300,
   bin_dir = ""
 )
 }
@@ -21,6 +24,11 @@ a cimg class object of imager library.}
 \item{exact}{A logical. Check matching exactly or not.}
 
 \item{timeout}{A numeric for timeout seconds.}
+
+\item{corner}{A string to specify a corner of the display.
+"top_left", "top_right", "bottom_left", or "bottom_right".}
+
+\item{width, height}{A integer to specify width or height of the corner.}
 
 \item{bin_dir}{A string for directory name of screenshot.exe on Win.}
 }
@@ -49,6 +57,8 @@ if(sc != ""){
   plot(sc_image)
   plot(needle)
   plot(found)
+  # usse `coner` argument to limit searching field
+  pos <- locate_image(needle, corner = "bottom_left", center = FALSE)
 }
 
 }
