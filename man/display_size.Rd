@@ -11,7 +11,7 @@ A list with two elements, \code{width} and \code{height}, which are the width
 and height of the display.
 }
 \description{
-Get the size of the display.
+Can be used in Windows.
 }
 \examples{
 display_size()

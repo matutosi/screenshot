@@ -58,6 +58,7 @@ if(sc != ""){
   plot(needle)
   plot(found)
   # usse `coner` argument to limit searching field
+  # `coner` can be used in Windows
   pos <- locate_image(needle, corner = "bottom_left", center = FALSE)
 }
 
