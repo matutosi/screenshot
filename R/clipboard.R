@@ -1,46 +1,95 @@
-  # Rの再起動後1回だけはうまくいく(謎)
-  #   2回目はエラー
-  # 
-  # clipboard <- get_clipboard_image()
-  # header <- create_header(clipboard)
-  # image_data <- c(header, clipboard)
-  # magick::image_read(image_data)
-
-  # clip <- get_clipboard_image()
-  # header <- create_header(clip)
-  # img <- c(header, clip)
-  # magick::image_read(img)
-
-#' Save clipboard image to file
+#' Saves an image from the clipboard to a file
 #'
 #' This function works only on windows.
-#' Saves the image currently in the clipboard to a file.
 #'
-#' @param path (optional) Path to save the image to.
+#' @param bin_dir Path to the directory containing the 
+#'             `convert` binary (ImageMagick).
+#' @param path Optional path to save the image to. 
 #'             If not specified, a temporary file will be created.
 #'
-#' @return Path to the saved image file.
+#' @return The path to the saved image file.
 #'
 #' @examples
 #' \dontrun{
-#' # Save the clipboard image to a temporary file
-#' save_clipboard_image()
-#' # Save the clipboard image to a specific file
-#' save_clipboard_image("image.png")
+#' # Save the image from the clipboard to a file
+#' bin_dir <- "DIR/OF/CONVERT/BINARY"
+#' save_clipboard_image(bin_dir, "clipboard_image.png")
+#' }
+#'
+#' @export
+save_clipboard_image <- function(bin_dir, path = ""){
+  path_bmp <- clipboard2bitmap()
+  path_png <- bitmap2png(path_bmp, bin_dir = bin_dir)
+  if(path != ""){
+    path <- fs::file_move(path_png, path)
+  }else{
+    path <- path_png
+  }
+  return(path)
+}
+
+#' Converts a bitmap image to PNG using ImageMagick's convert command
+#'
+#' @param path Path to the bitmap image.
+#' @param bin_dir Path to the ImageMagick bin directory.
+#'
+#' @return The result of the system call.
+#'
+#' @examples
+#' \dontrun{
+#' bitmap2png("path/to/image.bmp")
+#' }
+#'
+#' @export
+bitmap2png <- function(path, bin_dir = "imagemagick"){
+  out <- fs::path_ext_set(path, "png")
+  bin <- fs::path(bin_dir, "convert")
+  cmd <- paste(bin, path, out)
+  system(cmd, intern = TRUE)
+  return(out)
+}
+
+#' Save clipboard image to temporary BMP file
+#'
+#' This function works only on windows.
+#' This function saves the image currently in the clipboard 
+#' to a temporary BMP file.
+#'
+#' @return Path to the temporary BMP file.
+#' @examples
+#' \dontrun{
+#' clipboard2bitmap()
 #' }
 #' @export
-save_clipboard_image <- function(path = ""){
-  cb_img <- get_clipboard_image()
-  header <- create_header(cb_img)
-  if(path == ""){
-    fmt <- "png"
-    path <- fs::file_temp(ext = fmt)
-  }else{
-    fmt <- fs::path_ext(path)
-  }
-  c(header, cb_img) |>
-    magick::image_read() |>
-    magick::image_write(path, format = fmt)
+clipboard2bitmap <- function(){
+  clipboard <- get_clipboard_image()
+  #   clipboard[17:20] <- raw(4)
+  header <- create_header(clipboard)
+  image_data <- c(header, clipboard)
+  path <- fs::path_temp(ext = "bmp")
+  save_bmp(image_data, path)
+  return(path)
+}
+
+#' Save an image as a BMP file
+#'
+#' @param image_data A raster image data object, such as an array 
+#'        of pixel values or an R object representing an image.
+#' @param path The path to the file to be saved.
+#' @return Saves the image as a BMP file at the specified path.
+#' @examples
+#' \dontrun{
+#' # Create an image data object
+#' image_data <- matrix(rnorm(100), ncol = 10)
+#' # Save the image as a BMP file
+#' save_bmp(image_data, "image.bmp")
+#' }
+#'
+#' @export
+save_bmp <- function(image_data, path){
+  con <- file(path, "wb")
+    writeBin(image_data, con)
+  close(con)
   return(path)
 }
 
@@ -69,10 +118,9 @@ hex2little_endian <- function(x){
   return(x)
 }
 
-#' Get image from clipboard
+#' Retrieves the image from the clipboard
 #'
 #' This function works only on windows.
-#' Retrieves the image from the clipboard.
 #'
 #' @return A raw vector containing the image data.
 #' @examples
@@ -123,58 +171,4 @@ create_header <- function(clipboard){
     as.hexmode() |>
     as.raw()
   return(header)
-}
-
-#' # # # # # # # # # # # # # # # # # # # # # # # 
-#' 
-#' 以下は，magick::image_read()でうまくいったら不要
-#' 
-#' bitmapとして一旦保存してから．読み込み直す方針
-#'   bitmapに保存するまではできるが
-#'   読み込み直すのがうまくいかない
-#' 
-#' # # # # # # # # # # # # # # # # # # # # # # # 
-
-#' Save clipboard image to temporary BMP file
-#'
-#' This function works only on windows.
-#' This function saves the image currently in the clipboard 
-#' to a temporary BMP file.
-#'
-#' @return Path to the temporary BMP file.
-#' @examples
-#' \dontrun{
-#' clipboard2bitmap()
-#' }
-#' @export
-clipboard2bitmap <- function(){
-  clipboard <- get_clipboard_image()
-  #   clipboard[17:20] <- raw(4)
-  header <- create_header(clipboard)
-  image_data <- c(header, clipboard)
-  path <- fs::path_temp(ext = "bmp")
-  save_bmp(image_data, path)
-  return(path)
-}
-
-#' Save an image as a BMP file
-#'
-#' @param image_data A raster image data object, such as an array 
-#'        of pixel values or an R object representing an image.
-#' @param path The path to the file to be saved.
-#' @return Saves the image as a BMP file at the specified path.
-#' @examples
-#' \dontrun{
-#' # Create an image data object
-#' image_data <- matrix(rnorm(100), ncol = 10)
-#' # Save the image as a BMP file
-#' save_bmp(image_data, "image.bmp")
-#' }
-#'
-#' @export
-save_bmp <- function(image_data, path){
-  con <- file(path, "wb")
-    writeBin(image_data, con)
-  close(con)
-  return(path)
 }
