@@ -22,6 +22,7 @@ display_corner <- function(corner = "bottom_left", width = 600, height = 600){
 
 #' Get the size of the display.
 #' 
+#' Can be used in Windows.
 #' @return A list with two elements, `width` and `height`, which are the width
 #'         and height of the display.
 #' @examples
@@ -29,9 +30,16 @@ display_corner <- function(corner = "bottom_left", width = 600, height = 600){
 #' 
 #' @export
 display_size <- function(){
+  KeyboardSimulator::mouse.move(1,1)
   pos <- KeyboardSimulator::mouse.get_cursor()
   KeyboardSimulator::mouse.move(999999,999999)
   size <- KeyboardSimulator::mouse.get_cursor()
   KeyboardSimulator::mouse.move(pos[1], pos[2])
   return(list(width = size[1], height = size[2]))
+}
+
+if(0){
+  KeyboardSimulator::mouse.move(999999,999999)
+  KeyboardSimulator::mouse.move(-999999,-999999)
+  size <- KeyboardSimulator::mouse.get_cursor()
 }

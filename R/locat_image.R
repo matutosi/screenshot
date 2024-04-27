@@ -29,6 +29,7 @@
 #'   plot(needle)
 #'   plot(found)
 #'   # usse `coner` argument to limit searching field
+#'   # `coner` can be used in Windows
 #'   pos <- locate_image(needle, corner = "bottom_left", center = FALSE)
 #' }
 #' 
@@ -36,9 +37,9 @@
 #' 
 #' @export
 locate_image <- function(needle_image, 
-                          center = TRUE, exact = TRUE, timeout = 5,
-                          corner = NULL, width = 600, height = 300,
-                          bin_dir = ""){
+                         center = TRUE, exact = TRUE, timeout = 5,
+                         corner = NULL, width = 600, height = 300,
+                         bin_dir = ""){
   if(is.character(needle_image)){
     needle_image <- imager::load.image(needle_image)
   }
@@ -56,7 +57,7 @@ locate_image <- function(needle_image,
   round(2)
   if(!is.null(corner)){
     corner <- display_corner(corner, width, height) * scale
-      haystack_image <- hay2needle(haystack_image, 
+    haystack_image <- hay2needle(haystack_image, 
                                  corner[1], corner[2], corner[3], corner[4])
   }else{
     corner <- c(0,0,0,0)
@@ -158,9 +159,9 @@ locate_ndl_in_hay <- function(ndl_mt, hay_mt,
 #' @param base_xy        A numeric pair of xy location.
 #' @return         A logical.
 is_all_same <- function(ndl_mt, hay_mt, base_xy){
-  rows <- (base_xy[[1]][1] + 1):(base_xy[[1]][1] + nrow(ndl_mt))
-  cols <- (base_xy[[1]][2] + 1):(base_xy[[1]][2] + ncol(ndl_mt))
-  diff <- sum(ndl_mt != hay_mt[rows, cols])
+  rows <- (base_xy[[1]][1] + 1):(base_xy[[1]][1] + nrow(ndl_mt) - 1) # -1: avoid error in locating edge images
+  cols <- (base_xy[[1]][2] + 1):(base_xy[[1]][2] + ncol(ndl_mt) - 1)
+  diff <- sum(ndl_mt[seq(rows), seq(cols)] != hay_mt[rows, cols])    # seq(rows), seq(cols): set same size of matrix
   if(diff == 0){
     return(TRUE)
   }
