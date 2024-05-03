@@ -8,3 +8,7 @@
 ^CRAN-SUBMISSION$
 ^img$
 ^data-raw$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

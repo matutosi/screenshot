@@ -63,7 +63,7 @@ bitmap2png <- function(path, bin_dir = "imagemagick"){
 #' @export
 clipboard2bitmap <- function(){
   clipboard <- get_clipboard_image()
-  #   clipboard[17:20] <- raw(4)
+  clipboard[17:20] <- raw(4)
   header <- create_header(clipboard)
   image_data <- c(header, clipboard)
   path <- fs::path_temp(ext = "bmp")
