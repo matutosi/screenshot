@@ -4,12 +4,9 @@
 \alias{save_clipboard_image}
 \title{Saves an image from the clipboard to a file}
 \usage{
-save_clipboard_image(bin_dir, path = "")
+save_clipboard_image(path = "")
 }
 \arguments{
-\item{bin_dir}{Path to the directory containing the
-\code{convert} binary (ImageMagick).}
-
 \item{path}{Optional path to save the image to.
 If not specified, a temporary file will be created.}
 }
@@ -22,8 +19,7 @@ This function works only on windows.
 \examples{
 \dontrun{
 # Save the image from the clipboard to a file
-bin_dir <- "DIR/OF/CONVERT/BINARY"
-save_clipboard_image(bin_dir, "clipboard_image.png")
+save_clipboard_image("clipboard_image.png")
 }
 
 }

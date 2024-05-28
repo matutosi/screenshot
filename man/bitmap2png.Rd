@@ -4,12 +4,10 @@
 \alias{bitmap2png}
 \title{Converts a bitmap image to PNG using ImageMagick's convert command}
 \usage{
-bitmap2png(path, bin_dir = "imagemagick")
+bitmap2png(path)
 }
 \arguments{
 \item{path}{Path to the bitmap image.}
-
-\item{bin_dir}{Path to the ImageMagick bin directory.}
 }
 \value{
 The result of the system call.
