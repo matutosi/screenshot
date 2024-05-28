@@ -17,6 +17,9 @@
 save_clipboard_image <- function(path = ""){
   path_bmp <- clipboard2bitmap()
   path_png <- bitmap2png(path_bmp)
+  if(is.null(path_png)){
+    return(invisible(NULL))
+  }
   if(path != ""){
     path <- fs::file_move(path_png, path)
   }else{
@@ -39,9 +42,15 @@ save_clipboard_image <- function(path = ""){
 #' @export
 bitmap2png <- function(path){
   out <- fs::path_ext_set(path, "png")
-  imager::load.image(path)|>
-    imager::save.image(out)
-  return(out)
+  img <- try(imager::load.image(path), silent = TRUE)
+  if("cimg" %in% class(img)){
+    imager::save.image(img, out)
+    return(out)
+  }
+  if(class(img) == "try-error"){
+    message("ERROR! Image Not found in Clipboard")
+    return(NULL)
+  }
 }
 
 #' Save clipboard image to temporary BMP file
