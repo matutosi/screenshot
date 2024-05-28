@@ -2,8 +2,6 @@
 #'
 #' This function works only on windows.
 #'
-#' @param bin_dir Path to the directory containing the
-#'             `convert` binary (ImageMagick).
 #' @param path Optional path to save the image to.
 #'             If not specified, a temporary file will be created.
 #'
@@ -12,14 +10,13 @@
 #' @examples
 #' \dontrun{
 #' # Save the image from the clipboard to a file
-#' bin_dir <- "DIR/OF/CONVERT/BINARY"
-#' save_clipboard_image(bin_dir, "clipboard_image.png")
+#' save_clipboard_image("clipboard_image.png")
 #' }
 #'
 #' @export
-save_clipboard_image <- function(bin_dir, path = ""){
+save_clipboard_image <- function(path = ""){
   path_bmp <- clipboard2bitmap()
-  path_png <- bitmap2png(path_bmp, bin_dir = bin_dir)
+  path_png <- bitmap2png(path_bmp)
   if(path != ""){
     path <- fs::file_move(path_png, path)
   }else{
@@ -31,7 +28,6 @@ save_clipboard_image <- function(bin_dir, path = ""){
 #' Converts a bitmap image to PNG using ImageMagick's convert command
 #'
 #' @param path Path to the bitmap image.
-#' @param bin_dir Path to the ImageMagick bin directory.
 #'
 #' @return The result of the system call.
 #'
@@ -41,11 +37,10 @@ save_clipboard_image <- function(bin_dir, path = ""){
 #' }
 #'
 #' @export
-bitmap2png <- function(path, bin_dir = "imagemagick"){
+bitmap2png <- function(path){
   out <- fs::path_ext_set(path, "png")
-  bin <- fs::path(bin_dir, "convert")
-  cmd <- paste(bin, path, out)
-  system(cmd, intern = TRUE)
+  imager::load.image(path)|>
+    imager::save.image(out)
   return(out)
 }
 
