@@ -2,9 +2,9 @@
 #'
 #' This function works only on windows.
 #'
-#' @param bin_dir Path to the directory containing the 
+#' @param bin_dir Path to the directory containing the
 #'             `convert` binary (ImageMagick).
-#' @param path Optional path to save the image to. 
+#' @param path Optional path to save the image to.
 #'             If not specified, a temporary file will be created.
 #'
 #' @return The path to the saved image file.
@@ -52,7 +52,7 @@ bitmap2png <- function(path, bin_dir = "imagemagick"){
 #' Save clipboard image to temporary BMP file
 #'
 #' This function works only on windows.
-#' This function saves the image currently in the clipboard 
+#' This function saves the image currently in the clipboard
 #' to a temporary BMP file.
 #'
 #' @return Path to the temporary BMP file.
@@ -73,7 +73,7 @@ clipboard2bitmap <- function(){
 
 #' Save an image as a BMP file
 #'
-#' @param image_data A raster image data object, such as an array 
+#' @param image_data A raster image data object, such as an array
 #'        of pixel values or an R object representing an image.
 #' @param path The path to the file to be saved.
 #' @return Saves the image as a BMP file at the specified path.
@@ -127,7 +127,7 @@ hex2little_endian <- function(x){
 #' \dontrun{
 #' get_clipboard_image()
 #' }
-#' 
+#'
 #' data(clipboard_sample)
 #' head(clipboard_sample, 100)
 #' header <- create_header(clipboard_sample)
@@ -153,20 +153,20 @@ get_clipboard_image <- function(){
 #'
 #' @export
 create_header <- function(clipboard){
-  header <- 
+  header <-
     c("42","4d",
       "00","00","00","00", # [3:6] temporary: 00
       "00","00",
       "00","00",
         # 42 (hex), 66 (dec): 14 (file header) + 40 (info header) + 12 (palette)
-      "42","00","00","00") 
-  len_clipboard <- length(clipboard) # sie of clipboard
+      "42","00","00","00")
+  len_clipboard <- length(clipboard) # size of clipboard
   len_header <- length(header) # size of header
   len_file <- len_clipboard + len_header
-  header[3:6] <- 
+  header[3:6] <-
     as.hexmode(len_file) |>
     hex2little_endian()
-  header <- 
+  header <-
     header |>
     as.hexmode() |>
     as.raw()
