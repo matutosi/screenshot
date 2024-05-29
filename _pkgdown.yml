@@ -2,3 +2,34 @@ url: https://matutosi.github.io/screenshot/
 template:
   bootstrap: 5
 
+reference:
+  - title: Take screenshot
+    contents:
+      - screenshot
+      - install_screenshot
+      - screenshot_exists
+      - get_os
+
+  - title: Locate image
+    contents:
+      - locate_image
+      - locate_ndl_in_hay
+      - hay2needle
+      - display_corner
+      - display_size
+      - compare_table
+      - count_val_freq
+      - image2gray_matrix
+      - index2xy
+      - is_all_same
+      - xy_pos
+
+  - title: Save clipboard image
+    contents:
+      - save_clipboard_image
+      - save_bmp
+      - get_clipboard_image
+      - create_header
+      - clipboard2bitmap
+      - bitmap2png
+      - hex2little_endian
