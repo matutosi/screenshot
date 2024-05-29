@@ -11,9 +11,11 @@ A list with two elements, \code{width} and \code{height}, which are the width
 and height of the display.
 }
 \description{
-Can be used in Windows.
+This function works only on windows.
 }
 \examples{
+\dontrun{
 display_size()
+}
 
 }

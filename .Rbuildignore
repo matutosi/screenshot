@@ -12,3 +12,5 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^inst/screenshot\.exe$
+^tools/screenshot_0\.exe$
