@@ -2,7 +2,6 @@
 
 * local
     * Windows 11, R 4.4.0
-    * Mac OS 11 Big Sur, R 4.4.0
 * devtools::check_win_devel()
 * rhub::rc_submit()
     * ubuntu-latest on GitHub
