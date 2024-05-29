@@ -11,8 +11,7 @@
 #' @param bin_dir       A string for directory name of screenshot.exe on Win.
 #' @return        A numeric pair of xy location.
 #' @examples
-#' if(interactive()){
-#' 
+#' \dontrun{
 #' sc <- screenshot()
 #' if(sc != ""){
 #'   sc_image <- imager::load.image(sc)
@@ -28,11 +27,10 @@
 #'   plot(sc_image)
 #'   plot(needle)
 #'   plot(found)
-#'   # usse `coner` argument to limit searching field
+#'   # usse `coner` to limit searching field
 #'   # `coner` can be used in Windows
 #'   pos <- locate_image(needle, corner = "bottom_left", center = FALSE)
 #' }
-#' 
 #' }
 #' 
 #' @export
@@ -53,8 +51,8 @@ locate_image <- function(needle_image,
   }
   haystack_image <- imager::load.image(sc)
   scale <- 
-    dim(haystack_image)[1] / display_size()$width %>%
-  round(2)
+    dim(haystack_image)[1] / display_size()$width |>
+    round(2)
   if(!is.null(corner)){
     corner <- display_corner(corner, width, height) * scale
     haystack_image <- hay2needle(haystack_image, 
@@ -66,8 +64,8 @@ locate_image <- function(needle_image,
   hay_mt <- image2gray_matrix(haystack_image)
   pos <- (locate_ndl_in_hay(ndl_mt, hay_mt, exact, timeout) + corner[1:2]) / scale
   if(center){
-    return(c(pos[1] + imager::width(needle_image)/2  %>% floor(),
-             pos[2] + imager::height(needle_image)/2 %>% floor() ))
+    return(c(pos[1] + imager::width(needle_image)/2  |> floor(),
+             pos[2] + imager::height(needle_image)/2 |> floor() ))
   }
   return(pos)
 }
@@ -82,8 +80,8 @@ locate_image <- function(needle_image,
 #' @export
 image2gray_matrix <- function(img){
   img <- 
-    img %>%
-    imager::rm.alpha() %>%
+    img |>
+    imager::rm.alpha() |>
     imager::grayscale()
   return(img[,,1,1])
 }
@@ -200,7 +198,7 @@ index2xy <- function(index, nrow){
 #' 
 #' @export
 xy_pos <- function(mt, val){
-  which(mt == val) %>%
+  which(mt == val) |>
     purrr::map(index2xy, nrow(mt))
 }
 
@@ -219,7 +217,7 @@ xy_pos <- function(mt, val){
 compare_table <- function(ndl_mt, hay_mt){
   ndl <- count_val_freq(ndl_mt, "ndl")
   hay <- count_val_freq(hay_mt, "hay")
-  dplyr::left_join(ndl, hay) %>%
+  dplyr::left_join(ndl, hay) |>
     dplyr::arrange(hay, ndl)
 }
 
@@ -235,9 +233,9 @@ compare_table <- function(ndl_mt, hay_mt){
 #' @export
 count_val_freq <- function(mt, colname){
   val <- "val"
-  tibble::tibble({{val}} := as.numeric(mt)) %>%
-    dplyr::group_by(.data[[val]]) %>%
-    dplyr::summarise({{colname}} := dplyr::n())
+  tibble::tibble({{ val }} := as.numeric(mt)) |>
+    dplyr::group_by(dplyr::pick({{ val }})) |>
+    dplyr::summarise({{ colname }} := dplyr::n())
 }
 
 #' Cut off a part of image from a whole image. 

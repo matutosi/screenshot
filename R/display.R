@@ -31,17 +31,13 @@ display_corner <- function(corner = "bottom_left", width = 600, height = 600){
 #' @export
 display_size <- function(){
   suppressWarnings(
-    resolution <- system("wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution /format:value", intern = TRUE) |>
+    resolution <- 
+      "wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution /format:value" |>
+      system(intern = TRUE) |>
       strsplit("=") |>
       unlist() |>
       as.double()
   )
   resolution <- resolution[!is.na(resolution)]
   return(list(width = resolution[1], height = resolution[2]))
-  #   KeyboardSimulator::mouse.move(1,1)
-  #   pos <- KeyboardSimulator::mouse.get_cursor()
-  #   KeyboardSimulator::mouse.move(999999,999999)
-  #   size <- KeyboardSimulator::mouse.get_cursor()
-  #   KeyboardSimulator::mouse.move(pos[1], pos[2])
-  #   return(list(width = size[1] + 1, height = size[2] + 1)) # add origin
 }
