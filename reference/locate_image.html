@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">screenshot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Locate needle image position on a screenshot image.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/matutosi/screenshot/blob/HEAD/R/locat_image.R" class="external-link"><code>R/locat_image.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/matutosi/screenshot/blob/HEAD/R/locate_image.R" class="external-link"><code>R/locate_image.R</code></a></small>
       <div class="d-none name"><code>locate_image.Rd</code></div>
     </div>
 
@@ -106,8 +106,7 @@ a cimg class object of imager library.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
-<span class="r-in"><span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="screenshot.html">screenshot</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="va">sc</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">sc_image</span> <span class="op">&lt;-</span> <span class="fu">imager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html" class="external-link">load.image</a></span><span class="op">(</span><span class="va">sc</span><span class="op">)</span></span></span>
@@ -123,11 +122,10 @@ a cimg class object of imager library.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sc_image</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">needle</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">found</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="co"># usse `coner` argument to limit searching field</span></span></span>
+<span class="r-in"><span>  <span class="co"># usse `coner` to limit searching field</span></span></span>
 <span class="r-in"><span>  <span class="co"># `coner` can be used in Windows</span></span></span>
 <span class="r-in"><span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu">locate_image</span><span class="op">(</span><span class="va">needle</span>, corner <span class="op">=</span> <span class="st">"bottom_left"</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
