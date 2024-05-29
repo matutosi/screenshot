@@ -1,7 +1,7 @@
 Package: screenshot
 Type: Package
 Title: Take Screenshots (Screen Capture) from R Command
-Version: 0.9.0.9000
+Version: 0.9.1
 Authors@R: 
     person("Toshikazu", "Matsumura", , 
            "matutosi@gmail.com", role = c("aut", "cre"),
@@ -17,12 +17,11 @@ Imports:
     dplyr,
     fs,
     imager,
-    KeyboardSimulator,
-    magick,
-    magrittr,
     purrr,
     rlang,
+    stringr,
     tibble,
+    utils
 Suggests: 
     knitr,
     rmarkdown,

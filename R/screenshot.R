@@ -87,8 +87,8 @@ install_screenshot <- function(bin_dir = ""){
   bat <- "screenshot.bat"
   exe <- "screenshot.exe"
   suppressWarnings({
-    paste0(url, bat) %>%
-      readLines() %>%
+    paste0(url, bat) |>
+      readLines() |>
       writeLines(paste0(bat))
   })
   # compile

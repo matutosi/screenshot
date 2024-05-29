@@ -24,5 +24,6 @@ image_data <- c(header, clipboard_sample)
 path <- fs::path_temp(ext = "bmp")
 save_bmp(image_data, path)
  # shell.exec(path)
+fs::file_delete(path)
 
 }

@@ -17,7 +17,11 @@ A numeric vector of length 4 representing the coordinates of the specified corne
 }
 \description{
 This function returns the coordinates of the specified corner of the display.
+This function works only on windows.
 }
 \examples{
+\dontrun{
 display_corner("top_left", 800, 800)
+}
+
 }
