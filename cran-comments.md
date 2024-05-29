@@ -2,7 +2,7 @@
 
 * local
     * Windows 11, R 4.4.0
-    * Mac OS 11 Big Sur, R 4..
+    * Mac OS 11 Big Sur, R 4.4.0
 * devtools::check_win_devel()
 * rhub::rc_submit()
     * ubuntu-latest on GitHub
@@ -17,9 +17,7 @@ There were 0 errors  | 0 warnings  | 0 notes
 
 ## devtools::check_win_devel() and rhub::rc_submit()
 
-There were 0 errors  | 0 warnings  |   Notes
-
-
+There were 0 errors  | 0 warnings  | 0  Notes
 
 # Downstream dependencies
 
