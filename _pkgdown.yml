@@ -27,9 +27,10 @@ reference:
   - title: Save clipboard image
     contents:
       - save_clipboard_image
-      - save_bmp
       - get_clipboard_image
-      - create_header
       - clipboard2bitmap
-      - bitmap2png
+      - save_bmp
+      - clipboard_sample
+      - create_header
       - hex2little_endian
+      - bitmap2png
