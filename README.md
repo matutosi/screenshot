@@ -93,7 +93,7 @@ KeyboardSimulator::mouse.click()
 
 You can see display scale in setting app as shown below.
 
-<img width="50%" src="./img/displaysettings.png">
+<img width="50%" src="./man/figures/displaysettings.png">
 
 ## Citation
 
