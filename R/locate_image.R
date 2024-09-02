@@ -247,24 +247,33 @@ count_val_freq <- function(mt, colname){
 
 #' Cut off a part of image from a whole image. 
 #' 
-#' @param haystack_image An image of cimg.
+#' @name crop_image
+#' @param image An image of cimg.
 #' @param pos_x,pos_y    A numeric to indicate the top left corner of cutting image.
 #'                       When NULL, position will be randomly sampled.
 #' @param w,h            A numeric for width or height of the cutting image.
 #' @return               An image of cimg object.
 #' @examples
-#' haystack_image <- imager::load.example("parrots")
-#' needle_image <- hay2needle(haystack_image, 200, 250, 100, 50)
+#' image <- imager::load.example("parrots")
+#' croped_image <- crop_image(image, 200, 250, 100, 50)
 #' layout(c(1:2))
-#' plot(haystack_image)
-#' plot(needle_image)
+#' plot(image)
+#' plot(croped_image)
 #' 
 #' @export
-hay2needle <- function(haystack_image, pos_x, pos_y, w = 50, h = 20){
-  dims <- dim(haystack_image)
-  img <- haystack_image[
+crop_image <- function(image, pos_x, pos_y, w = 50, h = 20){
+  dims <- dim(image)
+  img <- image[
            pos_x:(pos_x + w - 1), 
            pos_y:(pos_y + h - 1),,]
-  dim(img) <- c(w,h,dims[3],dims[4])
+  dim(img) <- c(w, h, dims[3], dims[4])
   return(imager::cimg(img))
+}
+
+#' @rdname crop_image
+#' @export
+hay2needle <- function(haystack_image, pos_x, pos_y, w, h){
+  message("'hay2needle()' will be removed in version 1.0.0.")
+  .Deprecated("crop_image")
+  crop_image(haystack_image, pos_x, pos_y, w = 50, h = 20)
 }
