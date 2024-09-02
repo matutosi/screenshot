@@ -9,12 +9,12 @@
 #' @return A numeric vector of length 4 representing the coordinates of the specified corner.
 #' @examples
 #' \dontrun{
-#' display_corner("top_left", 800, 800)
+#' size <- display_size()
+#' display_corner(size, "top_left", 800, 800)
 #' }
 #'
 #' @export
-display_corner <- function(corner = "bottom_left", width = 600, height = 600){
-  size <- display_size()
+display_corner <- function(size, corner = "bottom_left", width = 600, height = 600){
   corner <- 
     switch(corner,
       "top_left"     = c(                 1,                   1, width, height), 
