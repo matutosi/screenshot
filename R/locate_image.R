@@ -37,6 +37,7 @@
 locate_image <- function(needle_image, 
                          center = TRUE, exact = TRUE, timeout = 5,
                          corner = NULL, width = 600, height = 300,
+                         size = NULL, scale = NULL,
                          bin_dir = ""){
   if(is.character(needle_image)){
     needle_image <- imager::load.image(needle_image)
@@ -50,11 +51,16 @@ locate_image <- function(needle_image,
     return(c(0,0))
   }
   haystack_image <- imager::load.image(sc)
-  scale <- 
-    dim(haystack_image)[1] / display_size()$width |>
-    round(2)
+  if(is.null(scale)){
+    scale <- 
+      dim(haystack_image)[1] / display_size()$width |>
+      round(2)
+  }
+  if(is.null(size)){
+    size <- display_size()
+  }
   if(!is.null(corner)){
-    corner <- display_corner(corner, width, height) * scale
+    corner <- display_corner(size = size, corner, width, height) * scale
     haystack_image <- hay2needle(haystack_image, 
                                  corner[1], corner[2], corner[3], corner[4])
   }else{
@@ -237,6 +243,7 @@ count_val_freq <- function(mt, colname){
     dplyr::group_by(dplyr::pick({{ val }})) |>
     dplyr::summarise({{ colname }} := dplyr::n())
 }
+
 
 #' Cut off a part of image from a whole image. 
 #' 
