@@ -8,6 +8,8 @@
 #' @param corner        A string to specify a corner of the display. 
 #'                      "top_left", "top_right", "bottom_left", or "bottom_right".
 #' @param width,height  A integer to specify width or height of the corner.
+#' @param size          Integers to specify width or height of display size.
+#' @param scale         A numeric to specify display scale.
 #' @param bin_dir       A string for directory name of screenshot.exe on Win.
 #' @return        A numeric pair of xy location.
 #' @examples
@@ -19,10 +21,10 @@
 #'   h <- 80
 #'   pos_x <- 1
 #'   pos_y <- imager::height(sc_image) - h
-#'   needle <- hay2needle(sc_image, pos_x, pos_y, w, h)
+#'   needle <- crop_image(sc_image, pos_x, pos_y, w, h)
 #'   (locate_image(needle)) # center location
 #'   pos <- locate_image(needle, center = FALSE)
-#'   found <- hay2needle(sc_image, pos[1], pos[2], w, h)
+#'   found <- crop_image(sc_image, pos[1], pos[2], w, h)
 #'   layout(c(1:3))
 #'   plot(sc_image)
 #'   plot(needle)
@@ -61,7 +63,7 @@ locate_image <- function(needle_image,
   }
   if(!is.null(corner)){
     corner <- display_corner(size = size, corner, width, height) * scale
-    haystack_image <- hay2needle(haystack_image, 
+    haystack_image <- crop_image(haystack_image, 
                                  corner[1], corner[2], corner[3], corner[4])
   }else{
     corner <- c(0,0,0,0)
@@ -103,12 +105,12 @@ image2gray_matrix <- function(img){
 #' haystack_image <- imager::load.example("parrots")
 #' w <- 100
 #' h <- 50
-#' needle_image <- hay2needle(haystack_image, 129, 257, w, h)
+#' needle_image <- crop_image(haystack_image, 129, 257, w, h)
 #' hay_mt <- image2gray_matrix(haystack_image)
 #' ndl_mt <- image2gray_matrix(needle_image)
 #' (pos <- locate_ndl_in_hay(ndl_mt, hay_mt))
 #' 
-#' found <- hay2needle(haystack_image, pos[1], pos[2], w, h)
+#' found <- crop_image(haystack_image, pos[1], pos[2], w, h)
 #' layout(c(1:3))
 #' plot(haystack_image)
 #' plot(needle_image)
@@ -272,8 +274,8 @@ crop_image <- function(image, pos_x, pos_y, w = 50, h = 20){
 
 #' @rdname crop_image
 #' @export
-hay2needle <- function(haystack_image, pos_x, pos_y, w, h){
+hay2needle <- function(image, pos_x, pos_y, w, h){
   message("'hay2needle()' will be removed in version 1.0.0.")
   .Deprecated("crop_image")
-  crop_image(haystack_image, pos_x, pos_y, w = 50, h = 20)
+  crop_image(image, pos_x, pos_y, w = w, h = h)
 }
