@@ -18,7 +18,7 @@
 #' }
 #'
 #' @export
-screenshot <- function(file = "", bin_dir = ""){
+screenshot <- function(file = "", bin_dir = "", quote = FALSE){
   if(!screenshot_exists(bin_dir)){
     message("NOT found screenshot exec file")
     return("")
@@ -32,7 +32,11 @@ screenshot <- function(file = "", bin_dir = ""){
       bin_dir <- fs::path_package("screenshot")
     }
     exe <- "screenshot.exe"
-    cmd <- paste0(fs::path(bin_dir, exe), " ", file)
+    if(quote){
+      cmd <- paste0("'\"", fs::path(bin_dir, exe), "\" \"", file, "\"'")
+    }else{
+      cmd <- paste0(fs::path(bin_dir, exe), " ", file)
+    }
   }else if(os == "mac"){
     exe <- "screencapture -o"
     cmd <- paste0(fs::path(exe), " ", file)
