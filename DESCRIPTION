@@ -8,7 +8,7 @@ Authors@R:
            comment = c(ORCID = "0000-0003-2306-6355"))
 Description: Take screenshots from R command and locate an image position.
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 URL: https://github.com/matutosi/screenshot, https://matutosi.github.io/screenshot/
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -17,6 +17,7 @@ Imports:
     dplyr,
     fs,
     imager,
+    magick,
     purrr,
     rlang,
     stringr,

@@ -4,12 +4,14 @@
 \alias{screenshot}
 \title{Take a screenshot.}
 \usage{
-screenshot(file = "", bin_dir = "")
+screenshot(file = "", bin_dir = "", quote = FALSE)
 }
 \arguments{
 \item{file}{A string for file name of screenshot.}
 
 \item{bin_dir}{A string for directory name of screenshot.exe on Win.}
+
+\item{quote}{A logical. If true, quote the screenshot command.}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{    A file name of screenshot. When "", screenshot will be saved in a tempral directory.

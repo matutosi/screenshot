@@ -4,6 +4,7 @@
 #'
 #' @param file     A string for file name of screenshot.
 #' @param bin_dir  A string for directory name of screenshot.exe on Win.
+#' @param quote    A logical. If true, quote the screenshot command.
 #' @seealso        install_screenshot()
 #' @return         A file name of screenshot. When "", screenshot will be saved in a tempral directory.
 #' @examples
