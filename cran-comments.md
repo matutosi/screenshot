@@ -1,9 +1,8 @@
 # Test environments
 
 * local
-    * Windows 11, R 4.4.0
-* devtools::check_win_devel()
-* rhub::rc_submit()
+    * Windows 11, R 4.5.1
+* rhub::rhub_check()
     * ubuntu-latest on GitHub
     * macos-latest on GitHub
     * windows-latest on GitHub
