@@ -34,3 +34,4 @@ reference:
       - create_header
       - hex2little_endian
       - bitmap2png
+      - reset_transparent
