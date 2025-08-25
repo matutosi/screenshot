@@ -1,93 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://matutosi.github.io/screenshot/404.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/index.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/bitmap2png.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/clipboard2bitmap.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/clipboard_sample.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/compare_table.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/count_val_freq.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/create_header.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/display_corner.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/display_size.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/get_clipboard_image.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/get_os.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/hay2needle.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/hex2little_endian.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/image2gray_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/index2xy.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/install_screenshot.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/is_all_same.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/locate_image.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/save_bmp.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/save_clipboard_image.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/screenshot.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/screenshot_exists.html</loc>
-  </url>
-  <url>
-    <loc>https://matutosi.github.io/screenshot/reference/xy_pos.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://matutosi.github.io/screenshot/404.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/LICENSE-text.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/LICENSE.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/authors.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/index.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/news/index.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/bitmap2png.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/clipboard2bitmap.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/clipboard_sample.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/compare_table.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/count_val_freq.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/create_header.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/crop_image.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/display_corner.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/display_size.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/get_clipboard_image.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/get_os.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/hex2little_endian.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/image2gray_matrix.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/index.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/index2xy.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/install_screenshot.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/is_all_same.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/locate_image.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/reset_transparent.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/save_bmp.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/save_clipboard_image.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/screenshot.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/screenshot_exists.html</loc></url>
+<url><loc>https://matutosi.github.io/screenshot/reference/xy_pos.html</loc></url>
 </urlset>
+
