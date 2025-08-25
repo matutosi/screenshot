@@ -3,18 +3,19 @@
 #' This function returns the coordinates of the specified corner of the display.
 #' This function works only on windows.
 #'
+#' @param size    Integers to specify width or height of display size.
 #' @param corner  A string to specify a corner of the display. 
 #'                "top_left", "top_right", "bottom_left", or "bottom_right".
 #' @param width,height  A integer to specify width or height of the corner.
 #' @return A numeric vector of length 4 representing the coordinates of the specified corner.
 #' @examples
 #' \dontrun{
-#' display_corner("top_left", 800, 800)
+#' size <- display_size()
+#' display_corner(size, "top_left", 800, 800)
 #' }
 #'
 #' @export
-display_corner <- function(corner = "bottom_left", width = 600, height = 600){
-  size <- display_size()
+display_corner <- function(size, corner = "bottom_left", width = 600, height = 600){
   corner <- 
     switch(corner,
       "top_left"     = c(                 1,                   1, width, height), 

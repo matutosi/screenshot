@@ -4,9 +4,11 @@
 \alias{display_corner}
 \title{Get display corner of screen}
 \usage{
-display_corner(corner = "bottom_left", width = 600, height = 600)
+display_corner(size, corner = "bottom_left", width = 600, height = 600)
 }
 \arguments{
+\item{size}{Integers to specify width or height of display size.}
+
 \item{corner}{A string to specify a corner of the display.
 "top_left", "top_right", "bottom_left", or "bottom_right".}
 
@@ -21,7 +23,8 @@ This function works only on windows.
 }
 \examples{
 \dontrun{
-display_corner("top_left", 800, 800)
+size <- display_size()
+display_corner(size, "top_left", 800, 800)
 }
 
 }

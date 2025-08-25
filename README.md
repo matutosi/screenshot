@@ -4,6 +4,7 @@
 # screenshot
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 The goal of screenshot is to take a screenshot easily and locate image
@@ -70,7 +71,7 @@ plot(needle)
 plot(found)
 ```
 
-On Windows, clipboad image can be saved by `save_clipboard_image()`.
+On Windows, clipboard image can be saved by `save_clipboard_image()`.
 
 ``` r
 path_img <- "path_of_png_file"

@@ -26,12 +26,12 @@ Helper function for \code{locate_image()}.
 haystack_image <- imager::load.example("parrots")
 w <- 100
 h <- 50
-needle_image <- hay2needle(haystack_image, 129, 257, w, h)
+needle_image <- crop_image(haystack_image, 129, 257, w, h)
 hay_mt <- image2gray_matrix(haystack_image)
 ndl_mt <- image2gray_matrix(needle_image)
 (pos <- locate_ndl_in_hay(ndl_mt, hay_mt))
 
-found <- hay2needle(haystack_image, pos[1], pos[2], w, h)
+found <- crop_image(haystack_image, pos[1], pos[2], w, h)
 layout(c(1:3))
 plot(haystack_image)
 plot(needle_image)

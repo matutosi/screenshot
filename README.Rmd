@@ -83,7 +83,7 @@ plot(found)
 ```
 
 
-On Windows, clipboad image can be saved by `save_clipboard_image()`.
+On Windows, clipboard image can be saved by `save_clipboard_image()`.
 
 ```{r eval = FALSE}
 path_img <- "path_of_png_file"

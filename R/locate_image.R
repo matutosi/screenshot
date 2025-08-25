@@ -8,6 +8,8 @@
 #' @param corner        A string to specify a corner of the display. 
 #'                      "top_left", "top_right", "bottom_left", or "bottom_right".
 #' @param width,height  A integer to specify width or height of the corner.
+#' @param size          Integers to specify width or height of display size.
+#' @param scale         A numeric to specify display scale.
 #' @param bin_dir       A string for directory name of screenshot.exe on Win.
 #' @return        A numeric pair of xy location.
 #' @examples
@@ -19,10 +21,10 @@
 #'   h <- 80
 #'   pos_x <- 1
 #'   pos_y <- imager::height(sc_image) - h
-#'   needle <- hay2needle(sc_image, pos_x, pos_y, w, h)
+#'   needle <- crop_image(sc_image, pos_x, pos_y, w, h)
 #'   (locate_image(needle)) # center location
 #'   pos <- locate_image(needle, center = FALSE)
-#'   found <- hay2needle(sc_image, pos[1], pos[2], w, h)
+#'   found <- crop_image(sc_image, pos[1], pos[2], w, h)
 #'   layout(c(1:3))
 #'   plot(sc_image)
 #'   plot(needle)
@@ -37,6 +39,7 @@
 locate_image <- function(needle_image, 
                          center = TRUE, exact = TRUE, timeout = 5,
                          corner = NULL, width = 600, height = 300,
+                         size = NULL, scale = NULL,
                          bin_dir = ""){
   if(is.character(needle_image)){
     needle_image <- imager::load.image(needle_image)
@@ -50,12 +53,17 @@ locate_image <- function(needle_image,
     return(c(0,0))
   }
   haystack_image <- imager::load.image(sc)
-  scale <- 
-    dim(haystack_image)[1] / display_size()$width |>
-    round(2)
+  if(is.null(scale)){
+    scale <- 
+      dim(haystack_image)[1] / display_size()$width |>
+      round(2)
+  }
+  if(is.null(size)){
+    size <- display_size()
+  }
   if(!is.null(corner)){
-    corner <- display_corner(corner, width, height) * scale
-    haystack_image <- hay2needle(haystack_image, 
+    corner <- display_corner(size = size, corner, width, height) * scale
+    haystack_image <- crop_image(haystack_image, 
                                  corner[1], corner[2], corner[3], corner[4])
   }else{
     corner <- c(0,0,0,0)
@@ -97,12 +105,12 @@ image2gray_matrix <- function(img){
 #' haystack_image <- imager::load.example("parrots")
 #' w <- 100
 #' h <- 50
-#' needle_image <- hay2needle(haystack_image, 129, 257, w, h)
+#' needle_image <- crop_image(haystack_image, 129, 257, w, h)
 #' hay_mt <- image2gray_matrix(haystack_image)
 #' ndl_mt <- image2gray_matrix(needle_image)
 #' (pos <- locate_ndl_in_hay(ndl_mt, hay_mt))
 #' 
-#' found <- hay2needle(haystack_image, pos[1], pos[2], w, h)
+#' found <- crop_image(haystack_image, pos[1], pos[2], w, h)
 #' layout(c(1:3))
 #' plot(haystack_image)
 #' plot(needle_image)
@@ -238,26 +246,36 @@ count_val_freq <- function(mt, colname){
     dplyr::summarise({{ colname }} := dplyr::n())
 }
 
+
 #' Cut off a part of image from a whole image. 
 #' 
-#' @param haystack_image An image of cimg.
+#' @name crop_image
+#' @param image An image of cimg.
 #' @param pos_x,pos_y    A numeric to indicate the top left corner of cutting image.
 #'                       When NULL, position will be randomly sampled.
 #' @param w,h            A numeric for width or height of the cutting image.
 #' @return               An image of cimg object.
 #' @examples
-#' haystack_image <- imager::load.example("parrots")
-#' needle_image <- hay2needle(haystack_image, 200, 250, 100, 50)
+#' image <- imager::load.example("parrots")
+#' croped_image <- crop_image(image, 200, 250, 100, 50)
 #' layout(c(1:2))
-#' plot(haystack_image)
-#' plot(needle_image)
+#' plot(image)
+#' plot(croped_image)
 #' 
 #' @export
-hay2needle <- function(haystack_image, pos_x, pos_y, w = 50, h = 20){
-  dims <- dim(haystack_image)
-  img <- haystack_image[
+crop_image <- function(image, pos_x, pos_y, w = 50, h = 20){
+  dims <- dim(image)
+  img <- image[
            pos_x:(pos_x + w - 1), 
            pos_y:(pos_y + h - 1),,]
-  dim(img) <- c(w,h,dims[3],dims[4])
+  dim(img) <- c(w, h, dims[3], dims[4])
   return(imager::cimg(img))
+}
+
+#' @rdname crop_image
+#' @export
+hay2needle <- function(image, pos_x, pos_y, w, h){
+  message("'hay2needle()' will be removed in version 1.0.0.")
+  .Deprecated("crop_image")
+  crop_image(image, pos_x, pos_y, w = w, h = h)
 }

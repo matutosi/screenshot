@@ -178,3 +178,26 @@ create_header <- function(clipboard){
     as.raw()
   return(header)
 }
+
+#' Reset transparent background of an image
+#'
+#' @param path A character string specifying the file path to the image to be processed.
+#'
+#' @return The file path to the processed image.
+#'
+#' @examples
+#' \dontrun{
+#' path <- "directory/image.png"
+#' reset_transparent(path)
+#' }
+#'
+#' @export
+reset_transparent <- function(path){
+  bg_color <- "white"
+  path |>
+    magick::image_read() |>
+    magick::image_transparent(bg_color) |>
+    magick::image_background(bg_color, flatten = TRUE) |>
+    magick::image_write(path)
+  return((path))
+}
