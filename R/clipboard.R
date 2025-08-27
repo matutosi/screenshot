@@ -4,6 +4,8 @@
 #'
 #' @param path Optional path to save the image to.
 #'             If not specified, a temporary file will be created.
+#' @param reset_transparent   A logical. If true, the image of 
+#'             transparent color will be removed.
 #'
 #' @return The path to the saved image file.
 #'
@@ -14,7 +16,7 @@
 #' }
 #'
 #' @export
-save_clipboard_image <- function(path = ""){
+save_clipboard_image <- function(path = "", reset_transparent = TRUE){
   path_bmp <- clipboard2bitmap()
   path_png <- bitmap2png(path_bmp)
   if(is.null(path_png)){
@@ -24,6 +26,9 @@ save_clipboard_image <- function(path = ""){
     path <- fs::file_move(path_png, path)
   }else{
     path <- path_png
+  }
+  if(reset_transparent){
+    reset_transparent(path)
   }
   return(path)
 }
