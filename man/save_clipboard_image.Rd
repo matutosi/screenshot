@@ -4,11 +4,14 @@
 \alias{save_clipboard_image}
 \title{Saves an image from the clipboard to a file}
 \usage{
-save_clipboard_image(path = "")
+save_clipboard_image(path = "", reset_transparent = TRUE)
 }
 \arguments{
 \item{path}{Optional path to save the image to.
 If not specified, a temporary file will be created.}
+
+\item{reset_transparent}{A logical. If true, the image of
+transparent color will be removed.}
 }
 \value{
 The path to the saved image file.
