@@ -20,7 +20,7 @@ save_clipboard_image <- function(path = "", reset_transparent = TRUE){
   path_bmp <- clipboard2bitmap()
   path_png <- bitmap2png(path_bmp)
   if(is.null(path_png)){
-    path <- invisible(NULL)
+    return(invisible(NULL))
   }
   if(path != ""){
     path <- fs::file_move(path_png, path)
@@ -113,13 +113,12 @@ save_bmp <- function(image_data, path){
 #'
 #' @export
 hex2little_endian <- function(x){
+  x <- as.character(x)
   len <- stringr::str_length(x)
   if(len > 8){
     stop("Too big size")
   }
-  if((len %% 2) == 1){
-    x <- paste0(stringr::str_sub(x, 1, len-1), "0", stringr::str_sub(x, len))
-  }
+  # str_pad() left-pads, so an odd length needs no extra handling
   x <- stringr::str_pad(x, width = 8, side = "left", pad = "0")
   x <- c(stringr::str_sub(x, 7, 8),
          stringr::str_sub(x, 5, 6),

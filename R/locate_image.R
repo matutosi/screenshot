@@ -55,8 +55,7 @@ locate_image <- function(needle_image,
   haystack_image <- imager::load.image(sc)
   if(is.null(scale)){
     scale <- 
-      dim(haystack_image)[1] / display_size()$width |>
-      round(2)
+      round(dim(haystack_image)[1] / display_size()$width, 2)
   }
   if(is.null(size)){
     size <- display_size()
@@ -72,8 +71,8 @@ locate_image <- function(needle_image,
   hay_mt <- image2gray_matrix(haystack_image)
   pos <- (locate_ndl_in_hay(ndl_mt, hay_mt, exact, timeout) + corner[1:2]) / scale
   if(center){
-    return(c(pos[1] + imager::width(needle_image)/2  |> floor(),
-             pos[2] + imager::height(needle_image)/2 |> floor() ))
+    return(c(pos[1] + floor(imager::width(needle_image)  / 2),
+             pos[2] + floor(imager::height(needle_image) / 2)))
   }
   return(pos)
 }
@@ -165,13 +164,16 @@ locate_ndl_in_hay <- function(ndl_mt, hay_mt,
 #' @param base_xy        A numeric pair of xy location.
 #' @return         A logical.
 is_all_same <- function(ndl_mt, hay_mt, base_xy){
-  rows <- (base_xy[[1]][1] + 1):(base_xy[[1]][1] + nrow(ndl_mt) - 1) # -1: avoid error in locating edge images
-  cols <- (base_xy[[1]][2] + 1):(base_xy[[1]][2] + ncol(ndl_mt) - 1)
-  diff <- sum(ndl_mt[seq(rows), seq(cols)] != hay_mt[rows, cols])    # seq(rows), seq(cols): set same size of matrix
-  if(diff == 0){
-    return(TRUE)
+  # -1: avoid error in locating edge images, but keep at least one row and column
+  n_row <- max(nrow(ndl_mt) - 1, 1)
+  n_col <- max(ncol(ndl_mt) - 1, 1)
+  rows <- base_xy[[1]][1] + seq_len(n_row)
+  cols <- base_xy[[1]][2] + seq_len(n_col)
+  if(min(rows) < 1 || min(cols) < 1 ||
+     max(rows) > nrow(hay_mt) || max(cols) > ncol(hay_mt)){
+    return(FALSE)
   }
-  return(FALSE)
+  return(all(ndl_mt[seq_len(n_row), seq_len(n_col)] == hay_mt[rows, cols]))
 }
 
 #' Convert array index into xy location in matrix.
@@ -186,10 +188,8 @@ is_all_same <- function(ndl_mt, hay_mt, base_xy){
 #' 
 #' @export
 index2xy <- function(index, nrow){
-  x <- index %% nrow
-  y <- index %/% nrow
-  x[x == 0] <- nrow
-  y[x != 0] <- y + 1
+  x <- (index - 1) %%  nrow + 1
+  y <- (index - 1) %/% nrow + 1
   return(c(x, y))
 }
 
@@ -225,7 +225,7 @@ xy_pos <- function(mt, val){
 compare_table <- function(ndl_mt, hay_mt){
   ndl <- count_val_freq(ndl_mt, "ndl")
   hay <- count_val_freq(hay_mt, "hay")
-  dplyr::left_join(ndl, hay) |>
+  dplyr::left_join(ndl, hay, by = "val") |>
     dplyr::arrange(hay, ndl)
 }
 
@@ -265,6 +265,11 @@ count_val_freq <- function(mt, colname){
 #' @export
 crop_image <- function(image, pos_x, pos_y, w = 50, h = 20){
   dims <- dim(image)
+  if(pos_x < 1 || pos_y < 1 ||
+     pos_x + w - 1 > dims[1] || pos_y + h - 1 > dims[2]){
+    stop("Cutting area (", pos_x, ", ", pos_y, ", ", w, ", ", h,
+         ") is outside of the image (", dims[1], " x ", dims[2], ")")
+  }
   img <- image[
            pos_x:(pos_x + w - 1), 
            pos_y:(pos_y + h - 1),,]
@@ -274,8 +279,8 @@ crop_image <- function(image, pos_x, pos_y, w = 50, h = 20){
 
 #' @rdname crop_image
 #' @export
-hay2needle <- function(image, pos_x, pos_y, w, h){
-  message("'hay2needle()' will be removed in version 1.0.0.")
-  .Deprecated("crop_image")
+hay2needle <- function(image, pos_x, pos_y, w = 50, h = 20){
+  .Deprecated("crop_image", msg =
+    "'hay2needle()' is deprecated and will be removed in version 1.0.0. Use 'crop_image()' instead.")
   crop_image(image, pos_x, pos_y, w = w, h = h)
 }

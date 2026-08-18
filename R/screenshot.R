@@ -121,13 +121,10 @@ install_screenshot <- function(bin_dir = ""){
 screenshot_exists <- function(bin_dir = ""){
   os <- get_os()
   if(os == "win"){
-    wd <- getwd()
-    on.exit(setwd(wd))
     if(bin_dir == ""){
       bin_dir <- fs::path_package("screenshot")
     }
-    setwd(bin_dir)
-    exists <- fs::file_exists("screenshot.exe")
+    exists <- fs::file_exists(fs::path(bin_dir, "screenshot.exe"))
   }else if(os == "mac"){
     exe <- "screencapture"
     exists <- Sys.which(exe) != ""

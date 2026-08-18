@@ -21,7 +21,9 @@ display_corner <- function(size, corner = "bottom_left", width = 600, height = 6
       "top_left"     = c(                 1,                   1, width, height), 
       "top_right"    = c(size$width - width,                   1, width, height), 
       "bottom_left"  = c(                 1, size$height- height, width, height), 
-      "bottom_right" = c(size$width - width, size$height- height, width, height)
+      "bottom_right" = c(size$width - width, size$height- height, width, height),
+      stop("corner should be one of ",
+           "\"top_left\", \"top_right\", \"bottom_left\" or \"bottom_right\"")
     )
   return(as.integer(corner))
 }
@@ -39,14 +41,40 @@ display_corner <- function(size, corner = "bottom_left", width = 600, height = 6
 #' 
 #' @export
 display_size <- function(){
-  suppressWarnings(
-    resolution <- 
-      "wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution /format:value" |>
-      system(intern = TRUE) |>
-      strsplit("=") |>
-      unlist() |>
-      as.double()
-  )
-  resolution <- resolution[!is.na(resolution)]
+  resolution <- display_size_wmic()
+  if(length(resolution) < 2){
+    # wmic is deprecated and no longer shipped with recent Windows
+    resolution <- display_size_powershell()
+  }
   return(list(width = resolution[1], height = resolution[2]))
+}
+
+#' Helper functions for `display_size()`.
+#'
+#' @return A numeric vector of width and height, or a shorter vector on failure.
+#' @noRd
+display_size_wmic <- function(){
+  cmd <- paste("wmic path Win32_VideoController get",
+               "CurrentHorizontalResolution,CurrentVerticalResolution",
+               "/format:value")
+  res <- suppressWarnings(try(system(cmd, intern = TRUE), silent = TRUE))
+  if(inherits(res, "try-error")){
+    return(numeric(0))
+  }
+  res <- suppressWarnings(as.double(unlist(strsplit(res, "="))))
+  return(res[!is.na(res)])
+}
+
+#' @noRd
+display_size_powershell <- function(){
+  cmd <- paste("powershell -NoProfile -Command",
+               "\"Add-Type -AssemblyName System.Windows.Forms;",
+               "$s = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds;",
+               "$s.Width; $s.Height\"")
+  res <- suppressWarnings(try(system(cmd, intern = TRUE), silent = TRUE))
+  if(inherits(res, "try-error")){
+    return(numeric(0))
+  }
+  res <- suppressWarnings(as.double(res))
+  return(res[!is.na(res)])
 }

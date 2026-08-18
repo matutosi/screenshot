@@ -1,14 +1,13 @@
 Package: screenshot
 Type: Package
 Title: Take Screenshots (Screen Capture) from R Command
-Version: 0.9.2
+Version: 0.9.2.9000
 Authors@R: 
     person("Toshikazu", "Matsumura", , 
            "matutosi@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2306-6355"))
 Description: Take screenshots from R command and locate an image position.
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 URL: https://github.com/matutosi/screenshot, https://matutosi.github.io/screenshot/
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -32,3 +31,4 @@ Config/testthat/edition: 3
 Language: en-US
 Depends: 
     R (>= 4.1.0)
+Config/roxygen2/version: 8.1.0
