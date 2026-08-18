@@ -1,7 +1,6 @@
-# screenshot 0.9.1.9000
-
 # screenshot 0.9.2
 
+* 2025-08-27
     * `reset_transparent()` to reset transparent color.
 
 # screenshot 0.9.1

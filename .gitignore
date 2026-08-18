@@ -5,3 +5,4 @@
 README.html
 docs
 tools/*
+.claude/settings.local.json
