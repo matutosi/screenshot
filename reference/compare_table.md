@@ -26,7 +26,6 @@ val <- seq(from = 0, to = 1, by = 0.1)
 mt_1 <- matrix(sample(val,  20, replace = TRUE))
 mt_2 <- matrix(sample(val, 100, replace = TRUE))
 compare_table(mt_1, mt_2)
-#> Joining with `by = join_by(val)`
 #> # A tibble: 9 × 3
 #>     val   ndl   hay
 #>   <dbl> <int> <int>

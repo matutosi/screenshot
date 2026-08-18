@@ -23,5 +23,5 @@ A raw vector of the BMP header.
 ``` r
 data(clipboard_sample)
 create_header(clipboard_sample)
-#>  [1] 42 4d 02 22 3c 00 00 00 00 00 42 00 00 00
+#>  [1] 42 4d 22 c2 03 00 00 00 00 00 42 00 00 00
 ```

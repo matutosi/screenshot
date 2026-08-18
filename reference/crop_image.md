@@ -7,7 +7,7 @@ Cut off a part of image from a whole image.
 ``` r
 crop_image(image, pos_x, pos_y, w = 50, h = 20)
 
-hay2needle(image, pos_x, pos_y, w, h)
+hay2needle(image, pos_x, pos_y, w = 50, h = 20)
 ```
 
 ## Arguments

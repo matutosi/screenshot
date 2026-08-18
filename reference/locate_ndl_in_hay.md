@@ -38,7 +38,6 @@ needle_image <- crop_image(haystack_image, 129, 257, w, h)
 hay_mt <- image2gray_matrix(haystack_image)
 ndl_mt <- image2gray_matrix(needle_image)
 (pos <- locate_ndl_in_hay(ndl_mt, hay_mt))
-#> Joining with `by = join_by(val)`
 #> [1] 129 257
 
 found <- crop_image(haystack_image, pos[1], pos[2], w, h)

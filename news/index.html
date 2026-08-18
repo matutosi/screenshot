@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">screenshot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,33 @@
       <small>Source: <a href="https://github.com/matutosi/screenshot/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.9.2.9000" id="screenshot-0929000">screenshot 0.9.2.9000<a class="anchor" aria-label="anchor" href="#screenshot-0929000"></a></h2>
+<ul><li>Bug fixes
+<ul><li>
+<code><a href="../reference/index2xy.html">index2xy()</a></code> returned a column shifted by one for an index on the last row of a matrix, which could make <code><a href="../reference/locate_image.html">locate_image()</a></code> report a wrong position.</li>
+<li>
+<code><a href="../reference/hex2little_endian.html">hex2little_endian()</a></code> padded an odd number of digits in the middle, so the file size in the BMP header of <code><a href="../reference/create_header.html">create_header()</a></code> was wrong.</li>
+<li>
+<code><a href="../reference/save_clipboard_image.html">save_clipboard_image()</a></code> raised an error instead of returning <code>NULL</code> when the clipboard held no image.</li>
+<li>
+<code><a href="../reference/locate_image.html">locate_image()</a></code> applied <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">round()</a></code> and <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor()</a></code> to the wrong operand because of the precedence of the native pipe.</li>
+<li>
+<code><a href="../reference/crop_image.html">hay2needle()</a></code> lost the defaults of <code>w</code> and <code>h</code>.</li>
+<li>
+<code><a href="../reference/screenshot_exists.html">screenshot_exists()</a></code> raised an error when <code>bin_dir</code> did not exist.</li>
+</ul></li>
+<li>Other changes
+<ul><li>
+<code><a href="../reference/display_size.html">display_size()</a></code> falls back to PowerShell where <code>wmic</code> is not available.</li>
+<li>
+<code><a href="../reference/crop_image.html">crop_image()</a></code> reports an area outside of the image.</li>
+<li>
+<code><a href="../reference/display_corner.html">display_corner()</a></code> reports an unknown corner name.</li>
+<li>
+<code>tests/testthat.R</code> now runs the tests, and unit tests were added.</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.2" id="screenshot-092">screenshot 0.9.2<a class="anchor" aria-label="anchor" href="#screenshot-092"></a></h2><p class="text-muted">CRAN release: 2025-08-27</p>
 <ul><li>2025-08-27
