@@ -14,7 +14,8 @@ locate_image(
   height = 300,
   size = NULL,
   scale = NULL,
-  bin_dir = ""
+  bin_dir = "",
+  tol = 0
 )
 }
 \arguments{
@@ -23,7 +24,8 @@ a cimg class object of imager library.}
 
 \item{center}{A logical. TRUE returns center position of needle_image.}
 
-\item{exact}{A logical. Check matching exactly or not.}
+\item{exact}{A logical. Check matching exactly or not.
+FALSE compares sampled pixels only.}
 
 \item{timeout}{A numeric for timeout seconds.}
 
@@ -37,6 +39,12 @@ a cimg class object of imager library.}
 \item{scale}{A numeric to specify display scale.}
 
 \item{bin_dir}{A string for directory name of screenshot.exe on Win.}
+
+\item{tol}{A numeric for the tolerance of the comparison,
+in steps of 255 grayscale levels. 0 needs an exact
+match, which is right for a screenshot saved as PNG.
+Use a positive value for an image that has been
+through a lossy format such as JPEG.}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{   A numeric pair of xy location.

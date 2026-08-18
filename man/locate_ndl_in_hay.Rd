@@ -5,22 +5,31 @@
 \title{Locate needle image  matrix position in a haystack_image matrix.
 Helper function for \code{locate_image()}.}
 \usage{
-locate_ndl_in_hay(ndl_mt, hay_mt, exact = TRUE, timeout = 5)
+locate_ndl_in_hay(ndl_mt, hay_mt, exact = TRUE, timeout = 5, tol = 0)
 }
 \arguments{
 \item{ndl_mt, hay_mt}{A matrix}
 
-\item{exact}{A logical. Check matching exactly or not.}
+\item{exact}{A logical. Check matching exactly or not.
+FALSE compares sampled pixels only.}
 
 \item{timeout}{A numeric for timeout seconds.}
+
+\item{tol}{A numeric for the tolerance of the comparison,
+in steps of 255 grayscale levels. 0 needs an exact
+match. Use a positive value for an image that has
+been through a lossy format such as JPEG.}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{    A numeric pair of xy location for needle image.
 }\if{html}{\out{</div>}}
 }
 \description{
-Locate needle image  matrix position in a haystack_image matrix.
-Helper function for \code{locate_image()}.
+Searches the value that the needle and the haystack have in common and
+that appears fewest times in the haystack, and uses one of its positions
+as an anchor. Every candidate position of the needle is then a difference
+between a position of the value in the haystack and the anchor, so only
+those candidates have to be compared.
 }
 \examples{
 haystack_image <- imager::load.example("parrots")
