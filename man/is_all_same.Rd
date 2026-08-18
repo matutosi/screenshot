@@ -4,12 +4,14 @@
 \alias{is_all_same}
 \title{Helper function for \code{locate_ndl_in_hay()}.}
 \usage{
-is_all_same(ndl_mt, hay_mt, base_xy)
+is_all_same(ndl_mt, hay_mt, base_xy, tol_val = 0)
 }
 \arguments{
 \item{ndl_mt, hay_mt}{A matrix}
 
 \item{base_xy}{A numeric pair of xy location.}
+
+\item{tol_val}{A numeric of the tolerance of the comparison.}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{    A logical.
