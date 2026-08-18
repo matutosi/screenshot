@@ -48,6 +48,16 @@
 <li>
 <code><a href="../reference/screenshot_exists.html">screenshot_exists()</a></code> raised an error when <code>bin_dir</code> did not exist.</li>
 </ul></li>
+<li>Search speed
+<ul><li>
+<code><a href="../reference/locate_ndl_in_hay.html">locate_ndl_in_hay()</a></code> counts only the values of the needle image with <code><a href="https://rdrr.io/r/base/match.html" class="external-link">match()</a></code> and <code><a href="https://rdrr.io/r/base/tabulate.html" class="external-link">tabulate()</a></code>, instead of building a frequency table of the whole haystack image with <code>dplyr</code>. The frequency table was where almost all of the time went.</li>
+<li>One position of the rarest shared value is now used as an anchor, so the candidates follow directly from it and the repeated <code><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect()</a></code> is no longer needed. A few pixels spread over the needle image reject a candidate before the whole block is compared.</li>
+<li>On a haystack image of 1920 x 1280 the search went from about 42 seconds to about 0.25 seconds, and a needle image that is absent from the haystack image from about 110 seconds to about 0.3 seconds.</li>
+</ul></li>
+<li>New features
+<ul><li>
+<code><a href="../reference/locate_image.html">locate_image()</a></code> and <code><a href="../reference/locate_ndl_in_hay.html">locate_ndl_in_hay()</a></code> gain <code>tol</code> to allow a difference of a few grayscale levels. The default 0 keeps the exact match, which is right for a screenshot saved as PNG; a positive value helps for an image that has been through a lossy format such as JPEG.</li>
+</ul></li>
 <li>Other changes
 <ul><li>
 <code><a href="../reference/display_size.html">display_size()</a></code> falls back to PowerShell where <code>wmic</code> is not available.</li>
