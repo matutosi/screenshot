@@ -1,0 +1,201 @@
+# screenshot
+
+The goal of screenshot is to take a screenshot easily and locate image
+position on a display with R.
+
+## Installation
+
+You can install the development version from
+[GitHub](https://github.com/) with:
+
+``` r
+
+  # install.packages("remotes")
+remotes::install_github("matutosi/screenshot")
+install.packages("screenshot")  # You can also install from CRAN:
+```
+
+On Windows, need to install screenshot.exe by
+[`install_screenshot()`](https://matutosi.github.io/screenshot/reference/install_screenshot.md).
+This exe file is compiled from codes shown below.
+
+<https://superuser.com/questions/75614/take-a-screen-shot-from-command-line-in-windows#answer-1751844>
+
+``` r
+
+library(screenshot)
+  # required on win
+install_screenshot()
+  # if you want to install another directory
+  # bin_dir <- "SET_YOUR DIRECTORY"
+  # install_screenshot(bin_dir)
+```
+
+On Mac `screencapture` is usually available.
+
+On Linux GNOME desktop use `gnome-screenshot`. If not installed, run
+`sudo apt install gnome-screenshot`.
+
+## Example
+
+You can use
+[`screenshot()`](https://matutosi.github.io/screenshot/reference/screenshot.md)
+to take a screenshot easily.
+
+``` r
+
+library(screenshot)
+sc <- screenshot()
+sc_image <- imager::load.image(sc)
+plot(sc_image)
+```
+
+To locate image from a screenshot, use
+[`locate_image()`](https://matutosi.github.io/screenshot/reference/locate_image.md).
+In this case, bottom left corner of screenshot image was cut off as
+needle image.
+
+``` r
+
+sc <- screenshot()
+sc_image <- imager::load.image(sc)
+w <- 100
+h <- 80
+pos_x <- 1
+pos_y <- imager::height(sc_image) - h
+needle <- hay2needle(sc_image, pos_x, pos_y, w, h)
+(locate_image(needle)) # center location
+pos <- locate_image(needle, center = FALSE)
+found <- hay2needle(sc_image, pos[1], pos[2], w, h)
+layout(c(1:3))
+plot(sc_image)
+plot(needle)
+plot(found)
+```
+
+On Windows, clipboard image can be saved by
+[`save_clipboard_image()`](https://matutosi.github.io/screenshot/reference/save_clipboard_image.md).
+
+``` r
+
+path_img <- "path_of_png_file"
+save_clipboard_image(path_img)
+shell.exec(path_img)
+```
+
+## Caution (=0.9.0)
+
+- Automatically adjusted in 0.9.1 and latter.
+
+When changing display DPI scaling, need to adjust position.
+
+``` r
+
+  # when using 125%
+pos <- locate_image(IMAGE_TO_CLICK) / 1.25
+KeyboardSimulator::mouse.move(pos[1], pos[2])
+KeyboardSimulator::mouse.click()
+```
+
+You can see display scale in setting app as shown below.
+
+![](./reference/figures/displaysettings.png)
+
+## Citation
+
+Toshikazu Matsumura (2023) screenshot. Screenshot and locate image
+Easily. <https://github.com/matutosi/screenshot/>.
+
+# Package index
+
+## Take screenshot
+
+- [`screenshot()`](https://matutosi.github.io/screenshot/reference/screenshot.md)
+  : Take a screenshot.
+- [`install_screenshot()`](https://matutosi.github.io/screenshot/reference/install_screenshot.md)
+  : Install command line screenshot for Windows.
+- [`screenshot_exists()`](https://matutosi.github.io/screenshot/reference/screenshot_exists.md)
+  : Find screenshot exec file.
+- [`get_os()`](https://matutosi.github.io/screenshot/reference/get_os.md)
+  : Get OS name
+
+## Locate image
+
+- [`locate_image()`](https://matutosi.github.io/screenshot/reference/locate_image.md)
+  : Locate needle image position on a screenshot image.
+
+- [`locate_ndl_in_hay()`](https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.md)
+  :
+
+  Locate needle image matrix position in a haystack_image matrix. Helper
+  function for
+  [`locate_image()`](https://matutosi.github.io/screenshot/reference/locate_image.md).
+
+- [`crop_image()`](https://matutosi.github.io/screenshot/reference/crop_image.md)
+  [`hay2needle()`](https://matutosi.github.io/screenshot/reference/crop_image.md)
+  : Cut off a part of image from a whole image.
+
+- [`display_corner()`](https://matutosi.github.io/screenshot/reference/display_corner.md)
+  : Get display corner of screen
+
+- [`display_size()`](https://matutosi.github.io/screenshot/reference/display_size.md)
+  : Get the size of the display.
+
+- [`compare_table()`](https://matutosi.github.io/screenshot/reference/compare_table.md)
+  :
+
+  Compare values within tow arrays or matrices. Helper function for
+  [`locate_ndl_in_hay()`](https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.md).
+
+- [`count_val_freq()`](https://matutosi.github.io/screenshot/reference/count_val_freq.md)
+  :
+
+  Helper function for
+  [`compare_table()`](https://matutosi.github.io/screenshot/reference/compare_table.md).
+
+- [`image2gray_matrix()`](https://matutosi.github.io/screenshot/reference/image2gray_matrix.md)
+  :
+
+  Convert cimg class into grayscale xy matrix. Helper function for
+  [`locate_image()`](https://matutosi.github.io/screenshot/reference/locate_image.md).
+  Use grayscale to Speed up and to simplify code.
+
+- [`index2xy()`](https://matutosi.github.io/screenshot/reference/index2xy.md)
+  :
+
+  Convert array index into xy location in matrix. Helper function for
+  [`locate_ndl_in_hay()`](https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.md).
+
+- [`is_all_same()`](https://matutosi.github.io/screenshot/reference/is_all_same.md)
+  :
+
+  Helper function for
+  [`locate_ndl_in_hay()`](https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.md).
+
+- [`xy_pos()`](https://matutosi.github.io/screenshot/reference/xy_pos.md)
+  :
+
+  Get xy position of a value in a matrix Helper function for
+  [`locate_ndl_in_hay()`](https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.md).
+
+## Save clipboard image
+
+- [`save_clipboard_image()`](https://matutosi.github.io/screenshot/reference/save_clipboard_image.md)
+  : Saves an image from the clipboard to a file
+- [`get_clipboard_image()`](https://matutosi.github.io/screenshot/reference/get_clipboard_image.md)
+  : Retrieves the image from the clipboard
+- [`clipboard2bitmap()`](https://matutosi.github.io/screenshot/reference/clipboard2bitmap.md)
+  : Save clipboard image to temporary BMP file
+- [`save_bmp()`](https://matutosi.github.io/screenshot/reference/save_bmp.md)
+  : Save an image as a BMP file
+- [`clipboard_sample`](https://matutosi.github.io/screenshot/reference/clipboard_sample.md)
+  : Sample data of clipboard bitmap array
+- [`create_header()`](https://matutosi.github.io/screenshot/reference/create_header.md)
+  : Create a BMP header
+- [`hex2little_endian()`](https://matutosi.github.io/screenshot/reference/hex2little_endian.md)
+  : Convert hexadecimal string to little-endian
+- [`bitmap2png()`](https://matutosi.github.io/screenshot/reference/bitmap2png.md)
+  : Converts a bitmap image to PNG using
+- [`reset_transparent()`](https://matutosi.github.io/screenshot/reference/reset_transparent.md)
+  : Reset transparent background of an image
+
