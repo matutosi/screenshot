@@ -7,7 +7,7 @@
 \usage{
 crop_image(image, pos_x, pos_y, w = 50, h = 20)
 
-hay2needle(image, pos_x, pos_y, w, h)
+hay2needle(image, pos_x, pos_y, w = 50, h = 20)
 }
 \arguments{
 \item{image}{An image of cimg.}
