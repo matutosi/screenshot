@@ -1,4 +1,6 @@
-# screenshot 0.9.2.9000
+# screenshot 0.9.3
+
+* 2026-08-20
 
 * Bug fixes
     * `index2xy()` returned a column shifted by one for an index on the last
