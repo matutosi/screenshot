@@ -6,6 +6,17 @@
 
 - Bug fixes
 
+  - [`screenshot()`](https://matutosi.github.io/screenshot/reference/screenshot.md)
+    failed with `'C:/Program' not found` when a path held a space, such
+    as a package installed under `C:/Program Files`
+    ([\#1](https://github.com/matutosi/screenshot/issues/1)). The
+    command is now quoted with
+    [`shQuote()`](https://rdrr.io/r/base/shQuote.html) for the shell of
+    the platform. The `quote` argument of
+    [`screenshot()`](https://matutosi.github.io/screenshot/reference/screenshot.md)
+    did not help, because it wrapped the whole command in single quotes,
+    which `cmd.exe` does not treat as quoting. It is deprecated and
+    ignored now.
   - [`index2xy()`](https://matutosi.github.io/screenshot/reference/index2xy.md)
     returned a column shifted by one for an index on the last row of a
     matrix, which could make
