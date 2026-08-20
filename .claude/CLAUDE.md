@@ -20,6 +20,44 @@
 
 ### 現在の状態
 
+- 2026-08-20 13:15
+  **issue #1 (2024-02 から未解決) を直し，0.9.3 に取り込んだ**．
+  併せて `develop` と `main` の食い違いを解消した．
+  - **原因は空白を含むパスのクオート漏れ**で，サーバー固有ではない．
+    `C:/Program Files/...` にパッケージが入っていると
+    `'C:/Program' not found` で必ず落ちる．
+  - **以前入れた `quote = TRUE` は効いていなかった**．
+    コマンド全体をシングルクオートで囲む実装だったが，
+    **Windows の `system()` は `cmd.exe` 経由で，`cmd.exe` はシングルクオートを
+    引用符として扱わない**ため，かえって壊れる．4通りを実際に試して確かめた
+    (`quote=FALSE` も `quote=TRUE` も失敗，`shQuote(type = "cmd")` と
+    `system2()` + `shQuote()` は成功)．
+  - `screenshot_cmd()` を内部関数として切り出し，`shQuote()` で
+    プラットフォームのシェルに合わせてクオートする形にした
+    (Win は `type = "cmd"`，mac / Linux は `"sh"`)．
+    `quote` は **CRAN 0.9.2 で公開済みなので削除せず**，非推奨・無視にした
+    (明示指定時のみ警告)．テストを4件追加 (計11件パス)．
+  - **`display.R` の `system()` と `install_screenshot()` は直す必要がない**．
+    前者は固定のコマンド，後者は `path_temp()` へ `setwd()` してから
+    相対名で `.bat` を呼ぶため，空白の影響を受けない．
+  - **`main` の `NAMESPACE` に `display_corner`・`display_size` の export が
+    重複していた**(手で編集した残骸)．roxygen2 の生成物と違うため，
+    マージのたびに「main 側の変更」として残り続けていた．
+    `inst/.gitignore` も main にしか無かった．
+    develop 側へ `inst/.gitignore` を置き，main の重複を消して**両ブランチを一致させた**
+    (`git diff develop main` が空)．
+  - **`git merge` の途中で `unable to write new index file` が一度出た**
+    (Dropbox 同期の影響とみられる)．コミットと push は成功しており，
+    崩れた作業ツリーを `git checkout -- <file>` で戻して復旧した．
+    `.git/index` に 2023-10-13 の競合コピーが残っている．
+  - **サーバーで使えるかへの回答**: `screenshot.exe` は GDI で撮るので
+    **対話的なデスクトップセッションが要る**．RDP でログイン中のセッション内なら
+    ヘッドレスでも動く．**切断後・Windows サービス・タスクスケジューラの
+    「ログオンしていなくても実行」は Session 0 分離で不可**．
+    Linux の `gnome-screenshot` は X / Wayland が要り，ヘッドレスは `Xvfb` が要る．
+    **無人の自動実行には向かない**．
+  - 返信の草案を用意した (未投稿)．
+
 - 2026-08-20 12:21
   **0.9.3 のリリース準備を済ませ，win-builder (R-devel) へ投げた**．
   - `DESCRIPTION` を 0.9.3 に，`NEWS.md` の見出しを `# screenshot 0.9.3` にして
@@ -92,10 +130,12 @@
 
 ### 次にやること
 
-- **CRAN への提出は 2026-08-20 以降に行う**．
-  CRAN は 2026-08-19 まで summer vacation で受け付けが止まるため．
-  提出時は 0.9.3 へ版を上げ，`NEWS.md` の `0.9.2.9000` の見出しを
-  `0.9.3` に書き換えて日付を入れる．
+- **0.9.3 を CRAN へ提出する**．版上げ・check は済んでいる．
+  **2026-08-20 13:00 の時点で受付フォーム (`index2.php`) へ繋がらない**
+  (`curl` も WebFetch もタイムアウト / 接続リセット．CRAN 本体は 200 で届く)．
+  **復旧を待って提出する**．提出は R コンソールから `devtools::submit_cran()`
+  (`Rscript` では `yesno()` が落ちる)．
+- **【判断待ち】issue #1 への返信を投稿する**．草案は用意済み (未投稿)．
 - CRAN 側の 0.9.2 の反映状況を確認する．
 - `compare_table()`, `count_val_freq()`, `xy_pos()`, `index2xy()` は
   公開関数なので残しているが，探索本体では使わなくなった．
