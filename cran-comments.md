@@ -1,7 +1,7 @@
 # Test environments
 
 * local
-    * Windows 11, R 4.5.1
+    * Windows 11, R 4.6.1
 * rhub::rhub_check()
     * ubuntu-latest on GitHub
     * macos-latest on GitHub

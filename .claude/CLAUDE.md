@@ -20,6 +20,21 @@
 
 ### 現在の状態
 
+- 2026-08-20 12:21
+  **0.9.3 のリリース準備を済ませ，win-builder (R-devel) へ投げた**．
+  - `DESCRIPTION` を 0.9.3 に，`NEWS.md` の見出しを `# screenshot 0.9.3` にして
+    直下に `* 2026-08-20` を置いた (**日付は見出しではなく直下の箇条書きに書く**のが
+    0.9.0 以降の書式)．
+  - ローカルの `devtools::check(cran = TRUE)` は **R 4.6.1 で 0/0/0**．
+    併せて `cran-comments.md` の local を R 4.5.1 → 4.6.1 に更新．
+  - **R を 4.6.1 に上げたあと，ユーザライブラリ 4.6 に `imager`・`magick` が無く
+    check が起動しなかった** (`load_imports()` が落ちる)．バイナリで導入した
+    (依存の `bmp`・`tiff`・`jpeg`・`readbitmap`・`downloader` も同時)．
+    **R を上げたらこの2つを入れ直す**．4.5 以前のライブラリには残っている．
+  - `spelling` も 4.6 に無く `tests/spelling.R` がスキップされていた．導入したところ
+    `lossy`・`PowerShell` が引っかかったので `inst/WORDLIST` に追加．
+  - `devtools::check_win_devel()` を送信済み (結果はメールで 15〜30 分後)．
+
 - 2026-08-19 08:36
   画像探索の高速化と `tol` の追加を `develop` から `main` へマージした．
 
