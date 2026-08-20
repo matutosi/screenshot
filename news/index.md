@@ -1,8 +1,11 @@
 # Changelog
 
-## screenshot 0.9.2.9000
+## screenshot 0.9.3
+
+- 2026-08-20
 
 - Bug fixes
+
   - [`index2xy()`](https://matutosi.github.io/screenshot/reference/index2xy.md)
     returned a column shifted by one for an index on the last row of a
     matrix, which could make
@@ -24,7 +27,9 @@
     lost the defaults of `w` and `h`.
   - [`screenshot_exists()`](https://matutosi.github.io/screenshot/reference/screenshot_exists.md)
     raised an error when `bin_dir` did not exist.
+
 - Search speed
+
   - [`locate_ndl_in_hay()`](https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.md)
     counts only the values of the needle image with
     [`match()`](https://rdrr.io/r/base/match.html) and
@@ -39,7 +44,9 @@
   - On a haystack image of 1920 x 1280 the search went from about 42
     seconds to about 0.25 seconds, and a needle image that is absent
     from the haystack image from about 110 seconds to about 0.3 seconds.
+
 - New features
+
   - [`locate_image()`](https://matutosi.github.io/screenshot/reference/locate_image.md)
     and
     [`locate_ndl_in_hay()`](https://matutosi.github.io/screenshot/reference/locate_ndl_in_hay.md)
@@ -47,7 +54,9 @@
     default 0 keeps the exact match, which is right for a screenshot
     saved as PNG; a positive value helps for an image that has been
     through a lossy format such as JPEG.
+
 - Other changes
+
   - [`display_size()`](https://matutosi.github.io/screenshot/reference/display_size.md)
     falls back to PowerShell where `wmic` is not available.
   - [`crop_image()`](https://matutosi.github.io/screenshot/reference/crop_image.md)

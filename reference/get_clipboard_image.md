@@ -29,7 +29,7 @@ header <- create_header(clipboard_sample)
 image_data <- c(header, clipboard_sample)
 path <- fs::path_temp(ext = "bmp")
 save_bmp(image_data, path)
-#> /tmp/Rtmp3akARv.bmp
+#> /tmp/RtmpXfCFzI.bmp
  # shell.exec(path)
 fs::file_delete(path)
 ```
