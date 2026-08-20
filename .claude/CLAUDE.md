@@ -135,7 +135,12 @@
   (`curl` も WebFetch もタイムアウト / 接続リセット．CRAN 本体は 200 で届く)．
   **復旧を待って提出する**．提出は R コンソールから `devtools::submit_cran()`
   (`Rscript` では `yesno()` が落ちる)．
-- **【判断待ち】issue #1 への返信を投稿する**．草案は用意済み (未投稿)．
+- **issue #1 への返信は，0.9.3 が CRAN に載ってから投稿する** (2026-08-20 に決定)．
+  **提出 → 公開を待ってから**なので，提出しただけでは投稿しない．
+  - 文面は **`.claude/issue1_reply.md`** に置いてある (内容は確認済み)．
+  - 投稿は `gh issue comment 1 --repo matutosi/screenshot -F .claude/issue1_reply.md`．
+  - 宛先は報告者の @karl-an と @stefansmr の2名．
+  - 併せて，**投稿したら issue #1 を close する**か決める (2024-02 から open のまま)．
 - CRAN 側の 0.9.2 の反映状況を確認する．
 - `compare_table()`, `count_val_freq()`, `xy_pos()`, `index2xy()` は
   公開関数なので残しているが，探索本体では使わなくなった．
