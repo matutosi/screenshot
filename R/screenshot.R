@@ -2,9 +2,12 @@
 #'
 #' Need to install screenshot.exe on Win by install_screenshot().
 #'
+#' The command is always quoted, so that a path with a space
+#' (such as "C:/Program Files/R/R-4.5.1/library/screenshot") works.
+#'
 #' @param file     A string for file name of screenshot.
 #' @param bin_dir  A string for directory name of screenshot.exe on Win.
-#' @param quote    A logical. If true, quote the screenshot command.
+#' @param quote    Deprecated and ignored. The command is always quoted.
 #' @seealso        install_screenshot()
 #' @return         A file name of screenshot. When "", screenshot will be saved in a tempral directory.
 #' @examples
@@ -20,6 +23,10 @@
 #'
 #' @export
 screenshot <- function(file = "", bin_dir = "", quote = FALSE){
+  if(!missing(quote)){
+    warning("`quote` is deprecated and ignored: ",
+            "the command is always quoted.", call. = FALSE)
+  }
   if(!screenshot_exists(bin_dir)){
     message("NOT found screenshot exec file")
     return("")
@@ -28,26 +35,36 @@ screenshot <- function(file = "", bin_dir = "", quote = FALSE){
     file <- fs::file_temp("sc_", ext = "png")
   }
   os <- get_os()
-  if(os == "win"){
-    if(bin_dir == ""){
-      bin_dir <- fs::path_package("screenshot")
-    }
-    exe <- "screenshot.exe"
-    if(quote){
-      cmd <- paste0("'\"", fs::path(bin_dir, exe), "\" \"", file, "\"'")
-    }else{
-      cmd <- paste0(fs::path(bin_dir, exe), " ", file)
-    }
-  }else if(os == "mac"){
-    exe <- "screencapture -o"
-    cmd <- paste0(fs::path(exe), " ", file)
-  }else{
-  # maybe Linux (almost GNOME?)
-    exe <- "gnome-screenshot -f"
-    cmd <- paste0(exe, " ", file)
+  if(os == "win" && bin_dir == ""){
+    bin_dir <- fs::path_package("screenshot")
   }
-  system(cmd, intern = TRUE)
+  system(screenshot_cmd(file, bin_dir, os), intern = TRUE)
   return(file)
+}
+
+#' Build the command line to take a screenshot.
+#'
+#' Each path is quoted with `shQuote()`, because a path with a space
+#' fails otherwise. On Windows `system()` runs the command with `cmd.exe`,
+#' which does not treat a single quote as a quoting character, so the
+#' quoting style has to follow the shell of the platform.
+#'
+#' @param file    A string for file name of screenshot.
+#' @param bin_dir A string for directory name of screenshot.exe on Win.
+#' @param os      A string of "win", "mac" or others (Linux).
+#' @return        A string of the command line.
+#' @noRd
+screenshot_cmd <- function(file, bin_dir = "", os = get_os()){
+  if(os == "win"){
+    exe <- as.character(fs::path(bin_dir, "screenshot.exe"))
+    return(paste(shQuote(exe, type = "cmd"),
+                 shQuote(file, type = "cmd")))
+  }
+  if(os == "mac"){
+    return(paste("screencapture -o", shQuote(file, type = "sh")))
+  }
+  # maybe Linux (almost GNOME?)
+  return(paste("gnome-screenshot -f", shQuote(file, type = "sh")))
 }
 
 #' Install command line screenshot for Windows.

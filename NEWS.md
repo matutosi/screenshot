@@ -3,6 +3,13 @@
 * 2026-08-20
 
 * Bug fixes
+    * `screenshot()` failed with `'C:/Program' not found` when a path held a
+      space, such as a package installed under `C:/Program Files`
+      ([#1](https://github.com/matutosi/screenshot/issues/1)).
+      The command is now quoted with `shQuote()` for the shell of the
+      platform. The `quote` argument of `screenshot()` did not help, because
+      it wrapped the whole command in single quotes, which `cmd.exe` does not
+      treat as quoting. It is deprecated and ignored now.
     * `index2xy()` returned a column shifted by one for an index on the last
       row of a matrix, which could make `locate_image()` report a wrong position.
     * `hex2little_endian()` padded an odd number of digits in the middle,

@@ -11,7 +11,7 @@ screenshot(file = "", bin_dir = "", quote = FALSE)
 
 \item{bin_dir}{A string for directory name of screenshot.exe on Win.}
 
-\item{quote}{A logical. If true, quote the screenshot command.}
+\item{quote}{Deprecated and ignored. The command is always quoted.}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{    A file name of screenshot. When "", screenshot will be saved in a tempral directory.
@@ -19,6 +19,10 @@ screenshot(file = "", bin_dir = "", quote = FALSE)
 }
 \description{
 Need to install screenshot.exe on Win by install_screenshot().
+}
+\details{
+The command is always quoted, so that a path with a space
+(such as "C:/Program Files/R/R-4.5.1/library/screenshot") works.
 }
 \examples{
 if(interactive()){
