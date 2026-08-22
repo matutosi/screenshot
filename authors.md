@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/matutosi/screenshot/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/matutosi/screenshot/blob/v0.9.3/DESCRIPTION)
 
 Matsumura T (2026). *screenshot: Take Screenshots (Screen Capture) from
 R Command*. R package version 0.9.3,

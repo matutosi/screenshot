@@ -2,6 +2,8 @@
 
 ## screenshot 0.9.3
 
+CRAN release: 2026-08-22
+
 - 2026-08-20
 
 - Bug fixes
