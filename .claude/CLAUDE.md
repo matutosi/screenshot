@@ -20,6 +20,19 @@
 
 ### 現在の状態
 
+- 更新: 2026-08-23 (JST)
+  **CRAN の auto-check サービスから「0.9.3 is on its way to CRAN」の通知が届いた**．
+  r-devel-linux-x86_64-debian-gcc・r-devel-windows-x86_64 とも Check: *, Result: OK．
+  **CRAN への登録処理中の連絡であり，掲載完了の連絡ではない**．
+  `*.tar.gz`・`*.Rcheck/` の残骸は無く，作業ツリーもクリーンだった．
+  - このセッション (バックグラウンドジョブ) では `EnterWorktree` が
+    `core.worktree redirect` を検出して失敗した (`D:\dropbox\todo` 自体も git 管理下にあり，
+    `screenshot` がその中の別リポジトリという入れ子構造が影響しているとみられる)．
+    ユーザ確認のうえ，このリポジトリの `.claude/settings.json` に
+    `"worktree": {"bgIsolation": "none"}` を追加してバックグラウンド隔離を無効化した．
+    試行中にできた空の worktree 2つ (`cran-0.9.3-notice`・`majestic-drifting-harp`) と
+    対応ブランチは削除済み．
+
 - 更新: 2026-08-22 18:09 (JST)
 - **0.9.3 を Web フォームから手動で提出し，確認メールのリンクも踏んで完了した**．
   `CRAN-SUBMISSION` は 0.9.3 (2026-08-22 09:03:53 UTC) に自動更新されていた
