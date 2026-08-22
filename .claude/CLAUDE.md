@@ -20,6 +20,14 @@
 
 ### 現在の状態
 
+- 更新: 2026-08-23 (このセッション)
+  **CRAN への 0.9.3 掲載を確認し，issue #1 へ返信・close した**．
+  `https://cran.r-project.org/package=screenshot` が Version 0.9.3 を返すことを確認．
+  返信文 (`.claude/issue1_reply.md`) は，掲載済みに合わせて
+  「開発版を GitHub から入れる案内」から「`install.packages("screenshot")` で 0.9.3 を入れる案内」へ書き換えてから投稿した．
+  投稿先: https://github.com/matutosi/screenshot/issues/1#issuecomment-5382428462
+  ユーザ確認のうえ issue #1 は close した (2024-02 から open のままだったもの)．
+
 - 更新: 2026-08-23 (JST)
   **CRAN の auto-check サービスから「0.9.3 is on its way to CRAN」の通知が届いた**．
   r-devel-linux-x86_64-debian-gcc・r-devel-windows-x86_64 とも Check: *, Result: OK．
@@ -163,16 +171,9 @@
 
 ### 次にやること
 
-- **CRAN からの受理連絡を待つ**．
-  受理されたら `*.tar.gz`・`*.Rcheck/` が残っていれば消し，
-  `usethis::use_github_release()`(`CRAN-SUBMISSION` の SHA にタグを打ち，そのファイルを削除する)．
-- **issue #1 への返信は，0.9.3 が CRAN に載ってから投稿する** (2026-08-20 に決定)．
-  **提出 → 公開を待ってから**なので，提出しただけでは投稿しない．
-  - 文面は **`.claude/issue1_reply.md`** に置いてある (内容は確認済み)．
-  - 投稿は `gh issue comment 1 --repo matutosi/screenshot -F .claude/issue1_reply.md`．
-  - 宛先は報告者の @karl-an と @stefansmr の2名．
-  - 併せて，**投稿したら issue #1 を close する**か決める (2024-02 から open のまま)．
-- CRAN 側の 0.9.2 の反映状況を確認する．
+- 0.9.3 の CRAN 掲載を確認した．`usethis::use_github_release()` を実行する
+  (`CRAN-SUBMISSION` の SHA にタグを打ち，そのファイルを削除する)．
+  `*.tar.gz`・`*.Rcheck/` の残骸は現状無い．
 - `compare_table()`, `count_val_freq()`, `xy_pos()`, `index2xy()` は
   公開関数なので残しているが，探索本体では使わなくなった．
   1.0.0 で整理するなら非公開化を検討する．
