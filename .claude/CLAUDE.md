@@ -20,11 +20,17 @@
 
 ### 現在の状態
 
+- 更新: 2026-08-23 (別セッションで確認)
+  **0.9.3 の CRAN 対応がすべて完了していることを確認した**．
+  `git fetch --tags` でタグ `v0.9.3` の存在 (2026-08-22 20:28:24 UTC 公開) と，
+  `CRAN-SUBMISSION` 削除のコミット `13d83dd`，`develop` → `main` のマージ・push
+  (コミット `f22f82f`) が済んでいることを確かめた．**積み残しは無い**．
+
 - 更新: 2026-08-23 (このセッション，続き)
   **`usethis::use_github_release()` で GitHub リリースタグを作成した**．
   タグ `v0.9.3` (`CRAN-SUBMISSION` の SHA `7e79cb9`) で
   https://github.com/matutosi/screenshot/releases/tag/v0.9.3 を公開．
-  `CRAN-SUBMISSION` は削除された (コミット待ち)．
+  `CRAN-SUBMISSION` は削除された (コミット済み: `13d83dd`)．
 
 - 更新: 2026-08-23 (このセッション)
   **CRAN への 0.9.3 掲載を確認し，issue #1 へ返信・close した**．
