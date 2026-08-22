@@ -20,6 +20,38 @@
 
 ### 現在の状態
 
+- 更新: 2026-08-23 (このセッション，続き)
+  **`usethis::use_github_release()` で GitHub リリースタグを作成した**．
+  タグ `v0.9.3` (`CRAN-SUBMISSION` の SHA `7e79cb9`) で
+  https://github.com/matutosi/screenshot/releases/tag/v0.9.3 を公開．
+  `CRAN-SUBMISSION` は削除された (コミット待ち)．
+
+- 更新: 2026-08-23 (このセッション)
+  **CRAN への 0.9.3 掲載を確認し，issue #1 へ返信・close した**．
+  `https://cran.r-project.org/package=screenshot` が Version 0.9.3 を返すことを確認．
+  返信文 (`.claude/issue1_reply.md`) は，掲載済みに合わせて
+  「開発版を GitHub から入れる案内」から「`install.packages("screenshot")` で 0.9.3 を入れる案内」へ書き換えてから投稿した．
+  投稿先: https://github.com/matutosi/screenshot/issues/1#issuecomment-5382428462
+  ユーザ確認のうえ issue #1 は close した (2024-02 から open のままだったもの)．
+
+- 更新: 2026-08-23 (JST)
+  **CRAN の auto-check サービスから「0.9.3 is on its way to CRAN」の通知が届いた**．
+  r-devel-linux-x86_64-debian-gcc・r-devel-windows-x86_64 とも Check: *, Result: OK．
+  **CRAN への登録処理中の連絡であり，掲載完了の連絡ではない**．
+  `*.tar.gz`・`*.Rcheck/` の残骸は無く，作業ツリーもクリーンだった．
+  - このセッション (バックグラウンドジョブ) では `EnterWorktree` が
+    `core.worktree redirect` を検出して失敗した (`D:\dropbox\todo` 自体も git 管理下にあり，
+    `screenshot` がその中の別リポジトリという入れ子構造が影響しているとみられる)．
+    ユーザ確認のうえ，このリポジトリの `.claude/settings.json` に
+    `"worktree": {"bgIsolation": "none"}` を追加してバックグラウンド隔離を無効化した．
+    試行中にできた空の worktree 2つ (`cran-0.9.3-notice`・`majestic-drifting-harp`) と
+    対応ブランチは削除済み．
+
+- 更新: 2026-08-22 18:09 (JST)
+- **0.9.3 を Web フォームから手動で提出し，確認メールのリンクも踏んで完了した**．
+  `CRAN-SUBMISSION` は 0.9.3 (2026-08-22 09:03:53 UTC) に自動更新されていた
+  (手動提出でも更新されると分かった．ecan と同じ)．
+
 - 2026-08-20 13:36 (この日の作業はここで終了)
   **0.9.3 は提出待ちの状態で止めた．提出は 2026-08-21 以降に行う**．
   - **検証は全系統で 0/0/0 が揃っている**．ローカル (R 4.6.1)，
@@ -145,22 +177,6 @@
 
 ### 次にやること
 
-- **0.9.3 を CRAN へ提出する (2026-08-21 以降)**．
-  **準備はすべて済んでいる**(版上げ・NEWS・issue #1 の修正・全系統 0/0/0・
-  `cran-comments.md`)．develop も main も push 済みで，作業ツリーはクリーン．
-  - **提出は R コンソール (RStudio か `R.exe`) から `devtools::submit_cran()`**．
-    `Rscript` では `yesno()` が `Called from non-interactive context.` で落ちる．
-  - **確認メールのリンクを踏むまで完了しない**．
-  - 提出後は `*.tar.gz` と `*.Rcheck/` を消す．
-    受理されたら `usethis::use_github_release()`(`CRAN-SUBMISSION` の SHA に
-    タグを打ち，そのファイルを削除する)．
-- **issue #1 への返信は，0.9.3 が CRAN に載ってから投稿する** (2026-08-20 に決定)．
-  **提出 → 公開を待ってから**なので，提出しただけでは投稿しない．
-  - 文面は **`.claude/issue1_reply.md`** に置いてある (内容は確認済み)．
-  - 投稿は `gh issue comment 1 --repo matutosi/screenshot -F .claude/issue1_reply.md`．
-  - 宛先は報告者の @karl-an と @stefansmr の2名．
-  - 併せて，**投稿したら issue #1 を close する**か決める (2024-02 から open のまま)．
-- CRAN 側の 0.9.2 の反映状況を確認する．
 - `compare_table()`, `count_val_freq()`, `xy_pos()`, `index2xy()` は
   公開関数なので残しているが，探索本体では使わなくなった．
   1.0.0 で整理するなら非公開化を検討する．

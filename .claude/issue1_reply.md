@@ -23,10 +23,10 @@ gives this on Windows, and it works:
 "C:/Program Files/.../screenshot.exe" "C:/.../sc_xxx.png"
 ```
 
-The fix is in the development version. It will be in 0.9.3 on CRAN.
+The fix is now on CRAN in 0.9.3.
 
 ```r
-remotes::install_github("matutosi/screenshot", ref = "main")
+install.packages("screenshot")
 screenshot::screenshot()
 ```
 
@@ -55,4 +55,4 @@ server needs something like `Xvfb`.
 In short: it is fine while you are working in an RDP session, but it is not
 suited to unattended, headless automation.
 
-Please try the development version and let me know if anything is still off.
+Please update to 0.9.3 and let me know if anything is still off.
