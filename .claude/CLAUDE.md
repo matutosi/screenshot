@@ -20,6 +20,12 @@
 
 ### 現在の状態
 
+- 更新: 2026-08-23 (このセッション，続き)
+  **`usethis::use_github_release()` で GitHub リリースタグを作成した**．
+  タグ `v0.9.3` (`CRAN-SUBMISSION` の SHA `7e79cb9`) で
+  https://github.com/matutosi/screenshot/releases/tag/v0.9.3 を公開．
+  `CRAN-SUBMISSION` は削除された (コミット待ち)．
+
 - 更新: 2026-08-23 (このセッション)
   **CRAN への 0.9.3 掲載を確認し，issue #1 へ返信・close した**．
   `https://cran.r-project.org/package=screenshot` が Version 0.9.3 を返すことを確認．
@@ -171,9 +177,6 @@
 
 ### 次にやること
 
-- 0.9.3 の CRAN 掲載を確認した．`usethis::use_github_release()` を実行する
-  (`CRAN-SUBMISSION` の SHA にタグを打ち，そのファイルを削除する)．
-  `*.tar.gz`・`*.Rcheck/` の残骸は現状無い．
 - `compare_table()`, `count_val_freq()`, `xy_pos()`, `index2xy()` は
   公開関数なので残しているが，探索本体では使わなくなった．
   1.0.0 で整理するなら非公開化を検討する．
